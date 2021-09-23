@@ -10,9 +10,24 @@ use App\Http\Controllers\ClassesController;
 use App\Http\Controllers\SectionController;
 use App\Http\Controllers\StudentSectionSessionController;
 use App\Http\Controllers\ExamController;
+use App\Http\Controllers\ExamRecordController;
 use App\Http\Controllers\ExamRegistrationController;
+use App\Http\Controllers\ExamReportCheckerController;
 use App\Http\Controllers\ExamReportEntryController;
 use App\Http\Controllers\SubjectController;
+use App\Http\Controllers\ClassApiController;
+use App\Http\Controllers\ExamRegistrationApiController;
+use App\Http\Controllers\ExamReportEntryApiController;
+use App\Http\Controllers\SectionApiController;
+use App\Http\Controllers\StudentApiController;
+use App\Http\Controllers\AttendanceController;
+use App\Http\Controllers\SettingController;
+use App\Http\Controllers\PinController;
+use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\PromotionController;
+use App\Http\Controllers\StudentSubjectController;
+use App\Http\Controllers\TeacherSectionController;
+use App\Http\Controllers\TeacherSectionSubjectController;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Route;
 use App\Models\Setting;
@@ -52,15 +67,36 @@ Route::any('/test', function(){
     return view('home');
 });
 
+Route::get('/profile',ProfileController::class)->middleware('auth');
+
 //Admin Routes
 Route::resource('admins', AdminController::class)->middleware('auth');
 
 //Teacher Routes
 Route::resource('teachers', TeacherController::class)->middleware('auth');
+Route::get('/teachers/get/all', [TeacherController::class,'getTeachers'])->middleware('auth');
+
+//Teacher Assignment
+Route::get('/teachers/assign/index',[TeacherController::class,'assignTeacher'])->middleware('auth');
+
+//Teacher Sections Routes
+Route::get('/teachers/{teacher_id}/sections',[TeacherSectionController::class,'getTeacherSections'])->middleware('auth');
+Route::post('/teachers/{teacher_id}/sections/toggle',[TeacherSectionController::class,'toggleTeacherSection'])->middleware('auth');
+
+//Teacher Sections Subjects Routes
+Route::get('/teachers/{teacher_id}/sections/{section_id}',[TeacherSectionSubjectController::class,'getTeacherSectionSubjects'])->middleware('auth');
+Route::post('/teachers/{teacher_id}/sections/{section_id}/toggle',[TeacherSectionSubjectController::class,'toggleTeacherSectionSubject'])->middleware('auth');
 
 //Student  Routes
 Route::resource('students', StudentController::class)->middleware('auth');
 Route::post('/students/{student}/set-class',[StudentController::class,'setClass'])->middleware('auth');
+Route::get('/students/section/{section_id}',[StudentApiController::class,'sectionIndex'])->middleware('auth');
+Route::get('/students/{student}/find',[StudentApiController::class,'show'])->middleware('auth');
+
+//Student Subjects Routes
+Route::get('/students/subjects/registered',[StudentSubjectController::class,'studentRegisteredSubjects'])->middleware(['auth','can:student-only']);
+Route::get('/students/subjects/register',[StudentSubjectController::class,'studentRegistration'])->middleware(['auth','exam.registration.open','can:student-only']);
+Route::get('/students/{student_id}/subjects/registered/json',[StudentSubjectController::class,'registeredSubjectsJson'])->middleware('auth');
 
 //User Routes
 Route::post('/users/{user}/upload-photo',[UserController::class,'uploadPhoto'])->middleware('auth');
@@ -74,10 +110,15 @@ Route::post('/classes',[ClassesController::class,'store'])->middleware('auth');
 Route::get('/classes/{classes}/edit',[ClassesController::class,'edit'])->middleware('auth');
 Route::patch('/classes/{classes}',[ClassesController::class,'update'])->middleware('auth');
 Route::delete('/classes/{classes}',[ClassesController::class,'destroy'])->middleware('auth');
+Route::get('/classes/all',[ClassApiController::class,'index'])->middleware('auth'); 
+Route::get('/classes/my-classes',[ClassApiController::class,'myClasses'])->middleware('auth'); 
 
 
 //Sections Routes
 Route::resource('sections', SectionController::class)->middleware('auth');
+Route::get('/sections/classes/{classes_id}',[SectionApiController::class,'classSections'])->middleware('auth');
+Route::get('/sections/classes/{classes_id}/user',[SectionApiController::class,'mySections'])->middleware('auth');
+Route::get('/sections/user',[SectionApiController::class,'userSection'])->middleware('auth');
 
 
 //Student Sections  Routes (Promotion)
@@ -86,15 +127,74 @@ Route::resource('studentsectionsessions', StudentSectionSessionController::class
 //Exams routes
 Route::resource('exams', ExamController::class)->middleware('auth');
 Route::get('/exams/{exam}/publish', [ExamController::class,'publish'])->middleware('auth');
+Route::get('/exams/find/all', [ExamController::class,'getExams'])->middleware('auth');
+
 
 //Exam Registration
-Route::get('/exams-registration', [ExamRegistrationController::class,'index'])->middleware('auth');
+Route::get('/exams-registration', [ExamRegistrationController::class,'index'])->middleware(['auth','exam.registration.open']);
 Route::get('/exams-registration/register/{student_id}/{section_id}', [ExamRegistrationController::class,'register'])->middleware('auth');
-Route::post('/exams-registration',[ExamRegistrationController::class,'store'])->middleware('auth');
+Route::post('/exams-registration',[ExamRegistrationController::class,'store'])->middleware(['auth','exam.registration.open']);
+Route::get('/exams-registration/subjects',[ExamRegistrationApiController::class,'SubjectIndex'])->middleware('auth');
+Route::get('/exams-registration/active-exam',[ExamRegistrationApiController::class,'activeExam'])->middleware('auth');
+Route::get('/exams-registration/student/{student_id}/section/{section_id}/registered',
+        [ExamRegistrationApiController::class,'studentRegisteredSubjects'])->middleware('auth');
+
 
 //Exam report Entry
 Route::get('/exams-entry', [ExamReportEntryController::class,'index'])->middleware('auth');
+Route::get('/exams-entry/view', [ExamReportEntryController::class,'viewEntries'])->middleware('auth');
+Route::post('/exams-entry/{mark_id}/update', [ExamReportEntryController::class,'update'])->middleware('auth');
+//exam report entry 
+Route::get('/exams-entry/section/{section_id}/subject/{subject_id}', 
+        [ExamReportEntryApiController::class,'sectionSubjectEntries'])->middleware('auth');
+Route::get('/exams-entry/subjects', [ExamReportEntryApiController::class,'subjectIndex'])->middleware('auth');
+
+//Exam Data Entry
+Route::get('/exams-record', [ExamRecordController::class,'index'])->middleware('auth');
+Route::get('/exams-record/{student_id}/{section_id}', [ExamRecordController::class,'getExamRecord'])->middleware('auth');
+Route::post('/exams-record/{student_id}/{section_id}/update', [ExamRecordController::class,'update'])->middleware('auth');
+
+//Exam Report Checker
+Route::get('/exams/report/checker',[ExamReportCheckerController::class,'index'])->middleware('auth');
+Route::get('/exams/report/checker/student',[ExamReportCheckerController::class,'Studentindex'])->middleware(['auth','can:student-only']);
+Route::post('/exams/report',[ExamReportCheckerController::class,'check'])->middleware('auth');
+//Route::post('/exams/report/{exam_id}/{student_id}',[ExamReportCheckerController::class,'check'])->middleware('auth');
 
 
 //Subjects  Routes
 Route::resource('subjects', SubjectController::class)->middleware('auth');
+Route::get('/subjects/get/all', [SubjectController::class,'getSubjects'])->middleware('auth');
+Route::get('/subjects/get/user/{section_id}', [SubjectController::class,'mySubjects'])->middleware('auth');
+
+//Attendance Routes
+Route::get('/attendances/roll/call',[AttendanceController::class,'rollCallIndex'])->middleware('auth');
+Route::get('/attendances/roll/view',[AttendanceController::class,'rollViewIndex'])->middleware('auth');
+Route::get('/attendances/student/view',[AttendanceController::class,'studentViewIndex'])->middleware(['auth','can:student-only']);
+Route::get('/attendances/student/{student_id}/events',[AttendanceController::class,'studentEvents'])->middleware('auth');
+Route::post('/attendances/student/{student_id}/{section_id}',[AttendanceController::class,'getStudentRoll'])->middleware('auth');
+Route::post('/attendances/student/{student_id}/{section_id}/update',[AttendanceController::class,'updateStudentRoll'])->middleware('auth');
+
+//Sessions Routes
+
+//Settings
+Route::get('/settings',[SettingController::class,'index'])->middleware('auth');
+Route::get('/settings/all',[SettingController::class,'getSettings'])->middleware('auth');
+Route::get('/settings/sessions/all',[SettingController::class,'getSessions'])->middleware('auth');
+Route::post('/settings/update',[SettingController::class,'updateSetting'])->middleware('auth');
+Route::get('/settings/school/logo',[SettingController::class,'schoolLogoIndex'])->middleware('auth');
+Route::post('/settings/school/logo',[SettingController::class,'uploadSchoolLogo'])->middleware('auth');
+
+//Pin Routes
+Route::get('/pins/exam/{exam_id}',[PinController::class,'getExamPins'])->middleware(['auth','exam.locked']);
+Route::get('/pins/{pin}/by',[PinController::class,'usedBy'])->middleware(['auth','exam.locked']);
+Route::get('/pins/generate',[PinController::class,'generateIndex'])->middleware(['auth','exam.locked']);
+Route::get('/pins/manage',[PinController::class,'manage'])->middleware(['auth','exam.locked']);
+Route::post('/pins/generate',[PinController::class,'generatePin'])->middleware(['auth','exam.locked']);
+Route::post('/pins/revoke/{pin}',[PinController::class,'revokePin'])->middleware(['auth','exam.locked']);
+Route::post('/pins/reset/{pin}',[PinController::class,'resetPin'])->middleware(['auth','exam.locked']);
+Route::post('/pins/remove/{pin}',[PinController::class,'removePin'])->middleware(['auth','exam.locked']);
+
+//Promotions routes
+
+Route::get('/promotions',[PromotionController::class,'index'])->middleware('auth');
+Route::post('/promotions',[PromotionController::class,'promoteStudent'])->middleware('auth');

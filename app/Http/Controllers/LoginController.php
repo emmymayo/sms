@@ -23,7 +23,7 @@ class LoginController extends Controller
                 {
                     $request->session()->regenerate() ;
                     //$mdbHandler->setWorkingDatabase($request->school);
-                    return redirect()->intended('/dashboard');
+                    return redirect('dashboard');
                     
                 }
         } catch (\Throwable $th) {

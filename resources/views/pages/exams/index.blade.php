@@ -95,6 +95,7 @@
                                     <th>Term</th>
                                     <th>Session</th>
                                     <th>Published</th>
+                                
                                     <th>...</th>
                                 </tr>
                             </thead>
@@ -108,6 +109,7 @@
                                     <td class="{{$exam->published==0?'text-warning':'text-success'}} font-weight-bold">
                                     {{$exam->published==0?'Pending':'Published'}}
                                     </td>
+                                   
                                     <td>
                                         <div class="btn-group">
                                         <button type="button" class="btn btn-success" ><i class="fas fa-stream"></i> </button>
@@ -118,12 +120,13 @@
                                         
                                         <a href="/exams/{{$exam->id}}/edit" class="dropdown-item"><i class="fas fa-edit"></i> Edit</a>
                                         <a href="/exams/{{$exam->id}}/publish" class="dropdown-item"><i class="fas fa-toggle-on"></i> Toggle Publish</a>
+                                       
                                         <div class="dropdown-divider"></div>
                                         <form action="/exams/{{$exam->id}}" method="POST" onsubmit="return confirm('Are you sure you want to delete this record?');">
                                                 @csrf 
                                                 @method('DELETE')
                                               
-                                                <button class="dropdown-item" type="submit"><i class="fas fa-trash"></i> Delete</button>
+                                                <button class="dropdown-item text-danger" type="submit"><i class="fas fa-trash"></i> Delete</button>
                                         </form>
                                         
                                         </div>

@@ -7,6 +7,7 @@ use App\Models\Student;
 use App\Models\Setting;
 use App\Models\StudentSectionSession;
 use App\Models\User;
+use App\Support\Helpers\SchoolSetting;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -76,6 +77,7 @@ class StudentController extends Controller
             'sessions' => Session::all(),
             'profile' => $student,
             'student_sections' => $student_sections,
+            'current_session_id'=>SchoolSetting::getSchoolSetting('current.session')
             ]);
     }
 
@@ -124,9 +126,14 @@ class StudentController extends Controller
         $student->state_id = $request->input('state_id')==null?$request->input('old_state_id'):$request->input('state_id');
         $student->lga_id = $request->input('state_id')==null?$request->input('old_lga_id'):$request->input('lga_id');
         $student->address = $request->input('address')==null?'Nil':$request->input('address');
- 
-        $student->save();
-        return back()->with('profile-update-success','Student Profile Updated Successfully');
+        $saved = DB::transaction(function() use($student){
+            $student->user->save();
+            return $student->save();
+        },3);
+        if($saved){
+            return back()->with('profile-update-success','Student Profile Updated Successfully');
+        }
+        return back()->with('profile-update-fail','Something went wrong.');
     }
 
     public function setClass(Request $request, Student $student)

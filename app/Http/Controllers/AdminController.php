@@ -28,6 +28,7 @@ class AdminController extends Controller
                 'settings' => Setting::all(),
                 'admins' => Admin::all(),
                 ]);
+
         
     }
 
@@ -157,9 +158,14 @@ class AdminController extends Controller
         $admin->position = $request->input('position')==null?'Nil':$request->input('position');
         $admin->contact = $request->input('contact')==null?'Nil':$request->input('contact');
         $admin->phone = $request->input('phone')==null?'Nil':$request->input('phone');
- 
-        $admin->save();
-        return back()->with('profile-update-success','Admin Profile Updated Successfully');
+        $saved = DB::transaction(function() use($admin){
+            $admin->user->save();
+            return $admin->save();
+        },3);
+        if($saved){
+            return back()->with('profile-update-success','Admin Profile Updated Successfully');
+        }
+        return back()->with('profile-update-fail','Something went wrong.');
 
     }
 
@@ -172,7 +178,9 @@ class AdminController extends Controller
     public function destroy(Admin $admin)
     {
         $this->authorize('delete',$admin);
-        
+        if($admin->user_id == 1 ){
+            return back()->with('user-delete-fail', 'Something went wrong. Try Again');
+        }
         $name = $admin->user->name;
         try{
             DB::transaction(function() use($admin){

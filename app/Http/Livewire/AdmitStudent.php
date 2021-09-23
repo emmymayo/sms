@@ -55,10 +55,11 @@ class AdmitStudent extends Component
     ];
 
     public function mount(){
-        $current_session_year = Setting::where('key','current.session')->get()->first()['value'];
-        $this->session_id = Session::where('start',$current_session_year)->get()->first()['id'];
-        $this->current_session_year = $current_session_year;
-        $this->year_admitted = $current_session_year;
+        //$current_session_year = Setting::where('key','current.session')->get()->first()['value'];
+        $this->session_id = Setting::where('key','current.session')->get()->first()['value'];
+        $session = Session::find($this->session_id);
+        $this->current_session_year = $session->start;
+        $this->year_admitted = $session->start;
 
     }
 

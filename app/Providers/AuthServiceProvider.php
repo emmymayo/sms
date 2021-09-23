@@ -22,6 +22,8 @@ class AuthServiceProvider extends ServiceProvider
         'App\Models\Section' => 'App\Policies\SectionPolicy',
         'App\Models\Exam' => 'App\Policies\ExamPolicy',
         'App\Models\Subject' => 'App\Policies\SubjectPolicy',
+        'App\Models\Pin' => 'App\Policies\PinPolicy',
+        'App\Models\Setting' => 'App\Policies\SettingPolicy',
     ];
 
     /**
@@ -34,6 +36,11 @@ class AuthServiceProvider extends ServiceProvider
         $this->registerPolicies();
         Gate::define('admin-only', function(User $user){
             if($user->role->name == 'admin' OR $user->role->name == 'sa'){
+                return true;
+            }else{return false;}
+        });
+        Gate::define('admin-and-teacher-only', function(User $user){
+            if($user->role->name == 'admin' OR $user->role->name == 'teacher'){
                 return true;
             }else{return false;}
         });

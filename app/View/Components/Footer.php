@@ -11,10 +11,10 @@ class Footer extends Component
      *
      * @return void
      */
-    public $motto;
-    public function __construct($motto)
+   
+    public function __construct()
     {
-        $this->motto = $motto;
+      
     }
 
     /**

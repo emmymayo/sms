@@ -1,11 +1,6 @@
 
-    <x-header title="Students " >
-    <!-- Select2 -->
-  <link rel="stylesheet" href="/plugins/select2/css/select2.min.css">
-         <!-- DataTables -->
-        <link rel="stylesheet" href="/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
-        <link rel="stylesheet" href="/plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
-        <link rel="stylesheet" href="/plugins/datatables-buttons/css/buttons.bootstrap4.min.css">
+    <x-header title="Exam Registration " >
+  
     </x-header>
     
             
@@ -21,7 +16,7 @@
                 <div class="container-fluid">
                     <div class="row mb-2">
                     <div class="col-sm-6">
-                        <h1 class="m-0">Exam Registration</h1>
+                        <h1 class="m-0 lead">Exam Registration</h1>
                     </div><!-- /.col -->
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
@@ -40,7 +35,7 @@
                 <div class="content">
                 <div class="container-fluid">
                 <!-- Vue App -->
-                <div id="exam-reg" class="elevation-2 p-3 card" >
+                <div id="exam-reg" v-cloak class="elevation-2 p-3 card" >
                 <div class="overlay w-100 h-100 text-center" v-show="app_loading" 
                     style="position:absolute;"><i class="fas fa-2x fa-spinner fa-spin "></i></div>
                 <div class="row">
@@ -72,7 +67,7 @@
                         <thead>
                             <tr>
                                 <th>#</th>
-                                <th>Image</th>
+                               
                                 <th>Name</th>
                                 
                                 <th>...</th>
@@ -85,13 +80,14 @@
                             
                             <tr v-for="(student,index) in students" :key="index" >
                             <td >@{{index+1}}</td>
-                            <td><img :src="'/storage/'+student.avatar" alt="Avatar" height="50" width="50" class="img-circle"></td>
-                            
-                            <td>@{{student.name}}</td>
+                            <td>
+                              <img :src="'/storage/'+student.avatar" alt="Avatar" height="50" width="50" class="img-circle">
+                              @{{student.name}}
+                            </td>
                             
                             <td>
-                            <button class="btn btn-info" 
-                                    @click="initRegistrationModal(student.id)">
+                            <button class="btn btn-success" 
+                                    @click="initRegistrationModal('{{csrf_token()}}',student.id)">
                                        <i class="fa fa-edit"></i> Register Subjects
                                     </button>
                                 
@@ -138,24 +134,47 @@
            <span class="text-success">@{{subject_registration_message}}</span>
            <hr>
             <br>
+            <table class="table table-striped">
+                <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Name</th>
+                                <th>Short Name</th>
+                                
+                                <th>...</th>
+                            </tr>
+                </thead>
+                <tbody>
+                        
+                        
+                         
+                            
+                        <tr v-for="(subject,index) in subjects" :key="index" class="uppercase">
+                            <td >@{{index+1}}</td>
+                            <td>@{{subject.name}}</td>
+                            
+                            <td>@{{subject.short_name}}</td>
+                            
+                            <td>
+                            <input class="form-check-input" type="checkbox" 
+                            :value="subject.id" v-model="registered_subjects_id"
+                            @change="registerSubject(subject.id)">
+                                
+                            
+                            </td>
+                            
+                          </tr>   
+                            
+                            
+                            
+                              
+                           
+                        
+                </tbody>
+            </table>
             
               <form>
-                <div class="form-group row">
-             
-                  
-                    <div class="form-check col-md-4" v-for="subject in subjects" :key="subject.id">
-                          <input class="form-check-input" type="checkbox" 
-                          :value="subject.id" v-model="registered_subjects_id"
-                            @change="registerSubject(subject.id)"
-                            >
-                          <label class="form-check-label text-uppercase">
-                          @{{subject.name}} 
-                          
-                          </label>
-                    </div>
-                  
-             
-                </div>
+                
               
             </div>
             <div class="modal-footer justify-content-between">

@@ -25,4 +25,8 @@ class Exam extends Model
     public function marks(){
         return $this->hasMany(Mark::class);
     }
+
+    public function examRecords(){
+        return $this->hasMany(ExamRecord::class);
+    }
 }

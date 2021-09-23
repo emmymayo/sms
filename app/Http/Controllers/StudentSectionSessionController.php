@@ -80,7 +80,11 @@ class StudentSectionSessionController extends Controller
      */
     public function destroy(StudentSectionSession $studentSectionSession, Request $request)
     {
-        
+        //Prevent deletion of only class
+        $section_count = StudentSectionSession::where('student_id',$request->input('student_id'))->count();
+        if($section_count<=1){
+            return back();
+        }
         StudentSectionSession::find($request->input('id'))->delete();
         return back();
     }

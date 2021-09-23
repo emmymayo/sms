@@ -17,7 +17,7 @@
                 <div class="container-fluid">
                     <div class="row mb-2">
                     <div class="col-sm-6">
-                        <h1 class="m-0">Student Profile</h1>
+                        <h1 class="m-0 lead">Student Profile</h1>
                     </div><!-- /.col -->
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
@@ -122,7 +122,7 @@
                         <!-- Profile Image -->
                         <div class="card card-primary card-outline">
                         <div class="card-body box-profile">
-                            <div class="text-center">
+                            <div class="text-center bg-gradient-primary">
                             <img class="profile-user-img img-fluid img-circle" src="/storage/{{$profile->user->avatar}}" alt="User profile picture">
                             </div>
 
@@ -193,7 +193,9 @@
                             <li class="nav-item active"><a class=" nav-link  " href="#edit_profile" data-toggle="tab">Edit Profile</a></li>
                             <li class="nav-item"><a class="nav-link " href="#upload_picture" data-toggle="tab">Upload Picture</a></li>
                             <li class="nav-item"><a class="nav-link " href="#change_password" data-toggle="tab">Change Password</a></li>
+                            @can('admin-only')
                             <li class="nav-item"><a class="nav-link " href="#set_class" data-toggle="tab">Set Class</a></li>
+                            @endcan
                             </ul>
                         </div><!-- /.card-header -->
                         <div class="card-body">
@@ -346,6 +348,7 @@
                                 
                                 </form>
                             </div>
+                            @can('admin-only')
 
                             <div id="set_class" class="tab-pane">
 
@@ -377,6 +380,7 @@
                                                 @csrf
                                                 @method('DELETE')
                                                 <input type="hidden" name="id" value="{{$student_section->sss_id}}">
+                                                <input type="hidden" name="student_id" value="{{$profile->id}}">
                                                 <button class="btn btn-danger" type="submit"><i class="fas fa-trash"></i></button>
                                             </form>
                                             
@@ -388,11 +392,7 @@
                                 </table>
                                 <form action="/students/{{$profile->id}}/set-class" method="POST"  >
                                 @csrf
-                                @php
-                                    $current_session_year = $settings->where('key','current.session')->first()['value'];
-                                    $current_session = App\Models\Session::where('start',$current_session_year)->get()->first(); 
-                                    
-                                @endphp
+                                
                                 
                                 <hr>
                                 @error('session_id')
@@ -411,7 +411,7 @@
                                         <select  class="form-control"  name="session_id" required >
                                                 <option value="">Select Session</option>
                                             @foreach ( $sessions as $session )
-                                                <option {{$current_session->id==$session->id?'selected':''}} value="{{$session->id}}">{{$session->start.'-'.$session->end}}</option>
+                                                <option {{$current_session_id == $session->id?'selected':''}} value="{{$session->id}}">{{$session->start.'-'.$session->end}}</option>
                                             @endforeach
                                         </select>
                                     </div>
@@ -422,6 +422,7 @@
                                 
                                 </form>
                             </div>
+                            @endcan
 
                             </div>
                             <!-- /.tab-content -->

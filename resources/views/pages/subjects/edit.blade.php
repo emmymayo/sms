@@ -17,7 +17,7 @@
                 <div class="container-fluid">
                     <div class="row mb-2">
                     <div class="col-sm-6">
-                        <h1 class="m-0">Edit Subject</h1>
+                        <h1 class="m-0 lead">Edit Subject</h1>
                     </div><!-- /.col -->
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
@@ -58,8 +58,8 @@
                   
 
                 <div class="form-group col-md-4">
-                    <label for="short_name">Short Name (required)</label>
-                    <input type="text" class="form-control" id="short_name" name="short_name" placeholder="Maths, Eng, CRS" value="{{$subject->short_name}}" required>
+                    <label for="short_name">Short Name </label>
+                    <input type="text" class="form-control" id="short_name" name="short_name" placeholder="Maths, Eng, CRS" value="{{$subject->short_name}}" >
                   </div>
                   @error('short_name')
                   <div class="text-danger">{{$message}}</div>

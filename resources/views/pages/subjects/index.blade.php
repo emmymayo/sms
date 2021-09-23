@@ -69,7 +69,7 @@
               <div class="card-header p-0 pt-1">
                 <ul class="nav nav-tabs" id="custom-tabs-one-tab" role="tablist">
                   <li class="nav-item">
-                    <a class="nav-link active" id="custom-tabs-one-home-tab" data-toggle="pill" href="#subject_list" role="tab" aria-controls="custom-tabs-one-home" aria-selected="true">Sections</a>
+                    <a class="nav-link active" id="custom-tabs-one-home-tab" data-toggle="pill" href="#subject_list" role="tab" aria-controls="custom-tabs-one-home" aria-selected="true">Subjects</a>
                   </li>
                   <li class="nav-item">
                     <a class="nav-link" id="custom-tabs-one-profile-tab" data-toggle="pill" href="#add_subject" role="tab" aria-controls="custom-tabs-one-profile" aria-selected="false">
@@ -111,7 +111,7 @@
                                                 @csrf 
                                                 @method('DELETE')
                                               
-                                                <button class="dropdown-item" type="submit"><i class="fas fa-trash"></i> Delete</button>
+                                                <button class="dropdown-item text-danger" type="submit"><i class="fas fa-trash"></i> Delete</button>
                                         </form>
                                         
                                         </div>
@@ -140,8 +140,8 @@
                             </div>
 
                             <div class="form-group col-md-4">
-                                <label for="short_name">Short Name (required)</label>
-                                <input required type="text" class="form-control" id="short_name" name="short_name" placeholder="Maths, Eng, CRS">
+                                <label for="short_name">Short Name </label>
+                                <input  type="text" class="form-control" id="short_name" name="short_name" placeholder="Maths, Eng, CRS">
                             </div>
                             
                             </div>

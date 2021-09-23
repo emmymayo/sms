@@ -21,7 +21,10 @@ class StudentApiController extends Controller
 
     public function sectionIndex($section_id){
         $session_id = SchoolSetting::getSchoolSetting('current.session');
-        $students = StudentSectionSession::select('students.*','users.name','users.avatar','students_sections_sessions.*')
+        $students = StudentSectionSession::select('students.*','users.name','users.avatar',
+                                                'students_sections_sessions.student_id',
+                                                'students_sections_sessions.section_id',
+                                                'students_sections_sessions.session_id',)
                                 ->where('section_id',$section_id)
                                 ->where('session_id',$session_id)
                                 ->join('students','students_sections_sessions.student_id','=','students.id')

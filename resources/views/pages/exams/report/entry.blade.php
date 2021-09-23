@@ -1,11 +1,6 @@
 
-    <x-header title="Students " >
-    <!-- Select2 -->
-  <link rel="stylesheet" href="/plugins/select2/css/select2.min.css">
-         <!-- DataTables -->
-        <link rel="stylesheet" href="/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
-        <link rel="stylesheet" href="/plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
-        <link rel="stylesheet" href="/plugins/datatables-buttons/css/buttons.bootstrap4.min.css">
+    <x-header title="Exam Score Entry " >
+    
     </x-header>
     
             
@@ -21,13 +16,13 @@
                 <div class="container-fluid">
                     <div class="row mb-2">
                     <div class="col-sm-6">
-                        <h1 class="m-0">Exam Report Entry</h1>
+                        <h1 class="m-0 lead">Exam Score Entry</h1>
                     </div><!-- /.col -->
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
                         <li class="breadcrumb-item"><a href="/">Home</a></li>
                         <li class="breadcrumb-item "><a href="/dashboard">Dashboard</a></li>
-                        <li class="breadcrumb-item active"><a href="/exams-entry">Exam Report Entry</a></li>
+                        <li class="breadcrumb-item active"><a href="/exams-entry">Exam Score Entry</a></li>
                         </ol>
                     </div><!-- /.col -->
                     </div><!-- /.row -->
@@ -40,7 +35,7 @@
                 <div class="content">
                 <div class="container-fluid">
                 <!-- Vue App -->
-                <div id="exam-entry" class="elevation-2 p-3 card" >
+                <div id="exam-entry" v-cloak class="elevation-2 p-3 card" >
                 <div class="overlay w-100 h-100 text-center" v-show="app_loading" 
                     style="position:absolute;"><i class="fas fa-2x fa-spinner fa-spin "></i></div>
                 <div class="row">
@@ -76,8 +71,9 @@
                         <button class="btn btn-primary" @click="loadStudentEntries" > Load Student Entries</button>
                     </div>
                 <!-- Vue Table -->
-                <div v-show="showEntries">   
-                <table id="" class="table table-striped" >
+                <div v-show="show_entries">   
+                <button class="btn btn-success float-right" @click="bulkUpdate()"> <i class="fa fa-paper-plane"></i> Update</button>
+                <table id="" class="table table-striped " >
                         <thead>
                             <tr>
                                 <th>#</th>
@@ -98,16 +94,14 @@
                             <td >@{{index+1}}</td>
                             
                             
-                            <td>@{{entry.student.user.name}}</td>
-                            <td><input type="text"   :value="entry.cass1"></td>
-                            <td><input type="text"   :value="entry.cass2"></td>
-                            <td><input type="text"  :value="entry.tass"></td>
+                            <td>@{{entries[index].student.user.name}}</td>
+                            <input type="hidden" v-model="entries[index].id" >
+                            <td><input type="text" class="form-control"   v-model="entries[index].cass1" ></td>
+                            <td><input type="text" class="form-control"  v-model="entries[index].cass2" ></td>
+                            <td><input type="text" class="form-control" v-model="entries[index].tass"></td>
                             
                             <td>
-                            <button class="btn btn-info" 
-                                    @click="">
-                                       <i class="fa fa-edit"></i> Update
-                                    </button>
+                            
                                 
                             </td>
                             

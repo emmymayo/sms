@@ -32,6 +32,15 @@ class TeacherController extends Controller
                 'teachers' => Teacher::all(),
                 ]);
     }
+    public function assignTeacher(){
+        return view('pages.teachers.assign.index');
+    }
+
+    public function getTeachers(){
+        $this->authorize('viewAny', Teacher::class);
+        $teachers = Teacher::all();
+        return response()->json($teachers,200);
+    }
 
     /**
      * Show the form for creating a new resource.
@@ -170,9 +179,14 @@ class TeacherController extends Controller
         $teacher->phone = $request->input('phone')==null?'Nil':$request->input('phone');
         $teacher->address = $request->input('address')==null?'Nil':$request->input('address');
         $teacher->account = $request->input('account')==null?'Nil':$request->input('account');
- 
-        $teacher->save();
-        return back()->with('profile-update-success','Teacher Profile Updated Successfully');
+        $saved = DB::transaction(function () use($teacher) {
+            $teacher->user->save();
+            return $teacher->save();
+        },3);
+        if($saved){
+            return back()->with('profile-update-success','Teacher Profile Updated Successfully');
+        }
+        return back()->with('profile-update-fail','Something went wrong');
     }
 
     /**

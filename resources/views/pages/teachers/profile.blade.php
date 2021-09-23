@@ -17,7 +17,7 @@
                 <div class="container-fluid">
                     <div class="row mb-2">
                     <div class="col-sm-6">
-                        <h1 class="m-0">Teacher Profile</h1>
+                        <h1 class="m-0 lead">Teacher Profile</h1>
                     </div><!-- /.col -->
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
@@ -122,7 +122,7 @@
                         <!-- Profile Image -->
                         <div class="card card-primary card-outline">
                         <div class="card-body box-profile">
-                            <div class="text-center">
+                            <div class="text-center bg-gradient-primary">
                             <img class="profile-user-img img-fluid img-circle" src="/storage/{{$profile->user->avatar}}" alt="User profile picture">
                             </div>
 

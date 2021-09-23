@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\Section;
 use Illuminate\Http\Request;
+use App\Models\TeacherSection;
+use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 
 class SectionApiController extends Controller
 {
@@ -21,10 +24,32 @@ class SectionApiController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function classIndex($classes_id)
+    public function classSections($classes_id)
     {
         return response()->json(Section::where('classes_id',$classes_id)
                             ->get(),200);
+    }
+
+    public function mySections($classes_id)
+    {
+        $user = User::find(Auth::id());
+        $sections = null;
+        if($user->isAdmin()){
+            $sections = Section::where('classes_id',$classes_id)
+                                ->get();
+        }
+        else if($user->isTeacher()){
+            $teacher_id = $user->teacher->id;
+            $sections = Section::whereIn('id', function($query) use($teacher_id,$classes_id){
+                        $query->select('section_id')
+                        ->from('teacher_sections')
+                        ->where('teacher_id',$teacher_id)
+                        ->get();
+                    })->where('classes_id',$classes_id)
+                    ->get();
+        }
+        
+        return response()->json($sections,200);
     }
     /**
      * Store a newly created resource in storage.

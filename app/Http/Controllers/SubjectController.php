@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\Subject;
 use Illuminate\Http\Request;
+use App\Models\User;
+use Illuminate\Support\Facades\Auth;
+use App\Models\TeacherSection;
 
 class SubjectController extends Controller
 {
@@ -18,6 +21,42 @@ class SubjectController extends Controller
         return view('pages.subjects.index',[
             'subjects' => Subject::all()
         ]);
+    }
+
+    public function getSubjects(){
+        $subjects = Subject::all();
+        return response()->json($subjects,200);
+    }
+
+    public function mySubjects($section_id){
+        $user = User::find(Auth::id());
+        $subjects = null;
+        if($user->isAdmin()){
+            $subjects = Subject::all();
+        }
+        else if($user->isTeacher()){
+            //check if teacher is section teacher then give him all subjects
+            //else find teacher subject
+            $teacher_id = $user->teacher->id;
+            $teacher_section_count = TeacherSection::where('teacher_id',$teacher_id)
+                                                ->where('section_id',$section_id)
+                                                ->count();
+            if($teacher_section_count>0){
+                //teacher is section teacher, return all subjects
+                $subjects = Subject::all();
+            }else{
+                //fetch assigned subjects
+                $subjects = Subject::whereIn('id', function($query) use($teacher_id,$section_id){
+                    $query->select('subject_id')
+                    ->from('teacher_section_subjects')
+                    ->where('teacher_id',$teacher_id)
+                    ->where('section_id',$section_id)
+                    ->get();
+                })->get();
+            }
+            
+        }
+        return response()->json($subjects,200);
     }
 
     /**
@@ -41,7 +80,7 @@ class SubjectController extends Controller
         $this->authorize('create',Subject::class);
         $request->validate([
             'name' => 'required|max:100',
-            'short_name' => 'required|max:100'
+            'short_name' => 'max:100'
         ]);
 
         $subject = new Subject();
@@ -90,7 +129,7 @@ class SubjectController extends Controller
         $this->authorize('update',$subject);
         $request->validate([
             'name' => 'required|max:100',
-            'short_name' => 'required|max:100'
+            'short_name' => 'max:100'
         ]);
 
         $subject->name = $request->input('name');
@@ -110,7 +149,7 @@ class SubjectController extends Controller
     public function destroy(Subject $subject)
     {
         $this->authorize('delete', $subject);
-        if($subject && $subject->save()){
+        if($subject->delete()){
             return back()->with('action-success','Subject deleted successfully.');
         }
         return back()->with('action-fail','Something went wrong. Try again.');

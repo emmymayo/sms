@@ -23,6 +23,14 @@ class ExamController extends Controller
         ]);
     }
 
+    public function getExams()
+    {
+        $exams = Exam::all();
+        return response()->json($exams,200);
+    }
+
+
+
     /**
      * Show the form for creating a new resource.
      *
@@ -44,7 +52,7 @@ class ExamController extends Controller
         $this->authorize('create', Exam::class);
 
         $request->validate([
-            'name' => 'required|max:200|uniques:exams,name',
+            'name' => 'required|max:200|unique:exams,name',
             'term' => 'required',
             'session' => 'required'
         ]);
@@ -137,4 +145,5 @@ class ExamController extends Controller
         return back()->with('action-fail','Something went wrong. Try Again');
 
     }
+  
 }

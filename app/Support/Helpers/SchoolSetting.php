@@ -3,6 +3,7 @@
 namespace App\Support\Helpers;
 
 use App\Models\Setting;
+use App\Models\Session;
 
 class SchoolSetting {
 
@@ -16,6 +17,14 @@ class SchoolSetting {
         return $school_setting->save();
 
     }
+
+    public static function getNextSchoolSessionId(){
+        $current_session = Session::find(self::getSchoolSetting('current.session'));
+        
+        $next_session = Session::firstWhere('start',$current_session->end);
+        return $next_session->id;
+    }
+    
 }
 
 

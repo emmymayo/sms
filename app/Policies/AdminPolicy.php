@@ -13,7 +13,7 @@ class AdminPolicy
     public function before(User $user, $ability)
     {
         if($user->role->name == 'admin' OR $user->role->name == 'sa'){return true;}
-        return false;
+        //return false;
     }
 
     /**
@@ -36,7 +36,7 @@ class AdminPolicy
      */
     public function view(User $user, Admin $admin)
     {
-        //
+        if($user->admin->id == $admin->id){return true;}
     }
 
     /**
@@ -59,7 +59,7 @@ class AdminPolicy
      */
     public function update(User $user, Admin $admin)
     {
-        //
+        if($user->admin->id == $admin->id){return true;}
     }
 
     /**

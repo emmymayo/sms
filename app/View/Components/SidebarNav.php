@@ -5,6 +5,7 @@ namespace App\View\Components;
 use Illuminate\View\Component;
 use Illuminate\Support\Facades\Auth;
 
+
 class SidebarNav extends Component
 {
     /**
@@ -25,8 +26,10 @@ class SidebarNav extends Component
      */
     public function render()
     {
+        
         return view('components.sidebar-nav', [
-            'user' => Auth::user(), 
+            'user' => Auth::user() 
+            
         ]);
     }
 }

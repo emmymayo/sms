@@ -19,7 +19,7 @@ class StudentPolicy
     public function before(User $user, $ability)
     {
         if($user->role->name == 'admin' OR $user->role->name == 'sa'){return true;}
-        return false;
+        //return false;
     }
 
     public function viewAny(User $user)
@@ -36,7 +36,7 @@ class StudentPolicy
      */
     public function view(User $user, Student $student)
     {
-        //
+        if($user->student->id == $student->id){return true;}
     }
 
     /**
@@ -59,7 +59,7 @@ class StudentPolicy
      */
     public function update(User $user, Student $student)
     {
-        //
+        if($user->student->id == $student->id){return true;}
     }
 
     /**

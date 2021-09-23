@@ -20,6 +20,8 @@ class ClassApiController extends Controller
         return response()->json(Classes::all(),200);
     }
 
+    
+
     /**
      * Store a newly created resource in storage.
      *

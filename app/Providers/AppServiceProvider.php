@@ -6,6 +6,7 @@ use Illuminate\Support\ServiceProvider;
 use App\Services\MultiDatabaseHandler;
 use Illuminate\Support\Facades\View;
 use App\Models\Setting;
+use App\Support\Helpers\SchoolSetting;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -27,5 +28,6 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
         View::share('settings',Setting::all());
+        
     }
 }

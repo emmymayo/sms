@@ -1,12 +1,53 @@
 
+//time init
+setInterval(showDate,1000);
+setInterval(showTime,1000);
+
+
 //Full Calendar initialization
 if(document.getElementById('calendar')){
 document.addEventListener('DOMContentLoaded', function(){
     var calendarEl = document.getElementById('calendar');
     var calendar = new FullCalendar.Calendar(calendarEl, {
+        themeSystem: 'bootstrap',
         initialView: 'dayGridMonth'
     })
     calendar.render();
+});
+}
+
+//Student Attendance Calendar
+if(document.getElementById('student-attendance')){
+document.addEventListener('DOMContentLoaded', function(){
+    //get student attendance
+    var student_id = document.getElementById('student_id').value ;
+    var events = null;
+    var url = `/attendances/student/${student_id}/events`;
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function(){
+        if(this.readyState==4 && this.status == 200){
+            events = JSON.parse(this.responseText);
+            //initialize attendance
+            var calendarEl = document.getElementById('student-attendance');
+            var calendar = new FullCalendar.Calendar(calendarEl, {
+                themeSystem: 'bootstrap',
+                initialView: 'dayGridWeek',
+                headerToolbar:{
+                    left:'prev,next today',
+                    center:'title',
+                    right:'dayGridMonth,dayGridWeek'
+                },
+                events: events.data
+            });
+            calendar.render();
+        }
+        else{
+            console.log(this.response);
+        }
+    };
+    xhttp.open("GET",url,true);
+    xhttp.send();
+    
 });
 }
 
@@ -93,3 +134,16 @@ if(document.getElementById('subject_list_table')){
         });
     });
     }
+
+    //Dashboard clock
+    
+function showDate(){
+	var dt = new Date();
+	document.getElementById("currDate").innerHTML=' '+ dt.toDateString();
+}
+
+function showTime(){
+	var dt = new Date();
+	document.getElementById("currTime").innerHTML=addZero(dt.getHours())+':'+addZero(dt.getMinutes())+':'+addZero(dt.getSeconds());
+}
+
