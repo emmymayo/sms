@@ -183,6 +183,7 @@ Route::get('/settings/sessions/all',[SettingController::class,'getSessions'])->m
 Route::post('/settings/update',[SettingController::class,'updateSetting'])->middleware('auth');
 Route::get('/settings/school/logo',[SettingController::class,'schoolLogoIndex'])->middleware('auth');
 Route::post('/settings/school/logo',[SettingController::class,'uploadSchoolLogo'])->middleware('auth');
+Route::get('/settings/keys/{unique_key}',[SettingController::class,'getSetting'])->middleware('auth');
 
 //Pin Routes
 Route::get('/pins/exam/{exam_id}',[PinController::class,'getExamPins'])->middleware(['auth','exam.locked']);

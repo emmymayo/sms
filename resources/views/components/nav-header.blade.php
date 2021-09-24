@@ -20,7 +20,7 @@
       <!-- Account Dropdown Menu -->
       <li class="nav-item dropdown ">
         <a class="nav-link" data-toggle="dropdown" href="#" aria-expanded="false">
-          <i class="far fa-user-circle"></i>
+          <i class="far fa-user-circle fa-2x"></i>
           
         </a>
         <div class="dropdown-menu dropdown-menu-md dropdown-menu-right"

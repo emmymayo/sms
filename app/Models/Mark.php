@@ -8,6 +8,8 @@ use App\Models\Student;
 use App\Models\Subject;
 use App\Models\Exam;
 use App\Models\Section;
+use Illuminate\Support\Facades\DB;
+use App\Support\Helpers\Exam as ExamHelper;
 
 class Mark extends Model
 {
@@ -43,5 +45,52 @@ class Mark extends Model
 
     public function section(){
         return $this->belongsTo(Section::class);
+    }
+
+    public function totalScore(){
+        $total = $this->cass1 + $this->cass2 + 
+                 $this->cass3 + $this->cass4 + 
+                 $this->tass ;
+        return $total ;
+    }
+
+    public function subjectStat(){
+        $stat = DB::table('marks')
+                ->selectRaw('
+                        MIN(cass1+cass2+cass3+cass4+tass) AS mini, 
+                        MAX(cass1+cass2+cass3+cass4+tass) AS maxi, 
+                        AVG(cass1+cass2+cass3+cass4+tass) AS average  
+                        ')
+                ->where('exam_id',$this->exam_id)
+                ->where('subject_id',$this->subject_id)
+                ->first();
+
+        return $stat ;
+    }
+
+    public function subjectPosition(){
+        $rank = DB::select('SELECT student_id, 
+                 RANK() OVER(ORDER BY (cass1+cass2+cass3+cass4+tass) DESC) position
+                 from marks 
+                 where exam_id = ? and subject_id = ? GROUP BY student_id',[$this->exam_id,$this->subject_id]);
+                //->where('exam_id',$this->exam_id)
+                //->where('subject_id',$this->subject_id)
+                //->where('student_id',$this->student_id)
+               // ->get();
+       $rank = collect($rank)->where('student_id',$this->student_id)->first();
+        $position = ExamHelper::getFormattedPosition($rank->position);
+
+        return $position ;
+    }
+
+    public function studentAverageScore(){
+       
+    }
+    public function scoreGrade(){
+        
+    }
+
+    public function scoreRemark(){
+
     }
 }

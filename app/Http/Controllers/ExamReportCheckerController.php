@@ -12,6 +12,7 @@ use App\Support\Helpers\Exam as ExamHelper;
 use App\Support\Helpers\SchoolSetting;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
+use App\Models\StudentSectionSession;
 use App\Services\Pin\Validator as PinValidator;
 
 class ExamReportCheckerController extends Controller
@@ -84,13 +85,31 @@ class ExamReportCheckerController extends Controller
         $marks = Mark::where('exam_id',$exam_id)->where('student_id',$student_id)->get();
         
         $settings = Setting::all();
+        //generate student avaerage score
+        $student_average = Mark::query()
+                                ->selectRaw('avg(cass1+cass2+cass3+cass4+tass) as average')
+                                ->where('exam_id',$exam_id)
+                                ->where('student_id',$student_id)
+                                 ->first();
+        //get no in section/class 
+        $current_session = SchoolSetting::getSchoolSetting('current.session');
+        $no_in_class = StudentSectionSession::query()
+                            ->where('session_id',$current_session)
+                            ->where('section_id', $record->section_id)
+                            ->count();
        
 
         return view('pages.exams.report.checker.viewer',[
             'marks'=>$marks,
             'record'=>$record,
-            'settings' =>$settings,
+            'exam' =>$exam,
             'attendance' => $student_attendance,
+            'student_average' => $student_average->average,
+            'no_in_class' => $no_in_class
             ]);
+    }
+
+    public function getStudentPosition(){
+       
     }
 }

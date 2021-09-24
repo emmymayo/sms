@@ -24,6 +24,7 @@ const SubjectRegistration = {
                 
               } catch (error) {
                 console.error(error);
+                toastr.error('Something went wrong. Try again.');
               }
         },
         async postRequests(url,params = {}){
@@ -32,6 +33,7 @@ const SubjectRegistration = {
                 
               } catch (error) {
                 console.error(error);
+                toastr.error('Something went wrong. Try again.');
               }
         },
         
@@ -54,7 +56,7 @@ const SubjectRegistration = {
             this.registered_subjects = response.data;
             this.setSubjects();
             this.show_subjects=true;
-            console.log(this.subjects);
+            
         },
         
         //initialize active exam on load
@@ -84,10 +86,10 @@ const SubjectRegistration = {
 
             if(response.data.message=='success'){
                 this.getRegisteredSubjects();
-                alert('done');
+                toastr.success('Done');
             }
             else{
-                    alert('failed');
+                toastr.error('Something went wrong. Try again.');
                     
             }
         }

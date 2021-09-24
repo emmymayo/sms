@@ -19,8 +19,15 @@ class SettingController extends Controller
     }
 
     public function getSettings(){
+        
         $settings = Setting::all();
         return response()->json($settings,200);
+    }
+
+    public function getSetting($unique_key){
+
+        $setting = Setting::firstWhere('key',$unique_key);
+        return response()->json($setting,200);
     }
 
     public function getSessions(){
@@ -29,6 +36,7 @@ class SettingController extends Controller
     }
 
     public function updateSetting(Request $request){
+        $this->authorize('create', Setting::class);
         $request->validate([
             'key' => 'required',
             'value' => 'required'
@@ -42,6 +50,7 @@ class SettingController extends Controller
         return response()->json(['message'=>'failed']);
     }
     public function uploadSchoolLogo(Request $request){
+        $this->authorize('create', Setting::class);
         $request->validate([
             'photo' => 'bail|required|file|image|max:1024|mimes:jpg,png'
         ]);

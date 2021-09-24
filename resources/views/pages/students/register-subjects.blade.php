@@ -1,11 +1,7 @@
 
-    <x-header title="Students " >
+    <x-header title="Register Exam Subjects " >
     <!-- Select2 -->
-  <link rel="stylesheet" href="/plugins/select2/css/select2.min.css">
-         <!-- DataTables -->
-        <link rel="stylesheet" href="/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
-        <link rel="stylesheet" href="/plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
-        <link rel="stylesheet" href="/plugins/datatables-buttons/css/buttons.bootstrap4.min.css">
+ 
     </x-header>
     
             
@@ -21,7 +17,7 @@
                 <div class="container-fluid">
                     <div class="row mb-2">
                     <div class="col-sm-6">
-                        <h1 class="m-0">Exam Registration</h1>
+                        <h1 class="m-0 lead">Exam Registration</h1>
                     </div><!-- /.col -->
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
@@ -42,7 +38,7 @@
                 <input type="hidden" id="student_id" name="student_id" value="{{$student->id}}">
                 <input type="hidden" id="section_id" name="ssection_id" value="{{$student_section}}">
                 <!-- Vue App -->
-                <div id="reg-subjects" class="elevation-2 p-3 card" >
+                <div id="reg-subjects" v-cloak class="elevation-2 p-3 card" >
                 <div class="overlay w-100 h-100 text-center" v-show="app_loading" 
                     style="position:absolute;"><i class="fas fa-2x fa-spinner fa-spin "></i></div>
                 

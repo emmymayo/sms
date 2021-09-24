@@ -137,13 +137,47 @@ if(document.getElementById('subject_list_table')){
 
     //Dashboard clock
     
+function addZero(time){
+	if(parseInt(time)<10){return "0"+time ;}
+	return time;
+}
+
+    
 function showDate(){
 	var dt = new Date();
-	document.getElementById("currDate").innerHTML=' '+ dt.toDateString();
+    if(document.getElementById("dashDate"))
+	document.getElementById("dashDate").innerHTML=' '+ dt.toDateString();
 }
 
 function showTime(){
 	var dt = new Date();
-	document.getElementById("currTime").innerHTML=addZero(dt.getHours())+':'+addZero(dt.getMinutes())+':'+addZero(dt.getSeconds());
+    if(document.getElementById("dashTime"))
+	document.getElementById("dashTime").innerHTML=addZero(dt.getHours())+':'+addZero(dt.getMinutes())+':'+addZero(dt.getSeconds());
 }
 
+//Short Notices
+
+if(document.getElementById('short_notice')){
+    document.addEventListener('DOMContentLoaded', function(){
+     
+        
+        
+        var url = `/settings/keys/short.notice`;
+        var xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function(){
+            if(this.readyState==4 && this.status == 200){
+                let notice = document.getElementById('short_notice') ;
+            response = JSON.parse(this.responseText);
+                notice.innerHTML= response.value;
+                
+            }
+            else{
+                
+            }
+        };
+        xhttp.open("GET",url,true);
+        xhttp.send();
+        
+    });
+    }
+    

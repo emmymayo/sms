@@ -38,7 +38,7 @@
                 <div class="container-fluid">
                     
                     
-                    <div id="student-attendance" class="">
+                    <div id="student-attendance" class="my-5 bg-white rounded card card-outline card-primary shadow mx-md-5 ">
                         
                     </div>
                     <input type="hidden" name="student_id" id="student_id" value="{{$student->id}}">

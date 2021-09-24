@@ -24,6 +24,10 @@ class SchoolSetting {
         $next_session = Session::firstWhere('start',$current_session->end);
         return $next_session->id;
     }
+
+    	
+	
+	
     
 }
 

@@ -73,7 +73,7 @@ const RollCall = {
         },
         //load sections
         async loadClassSections(class_id){
-            url = '/sections/classes/'+class_id;
+            url = '/sections/classes/'+class_id+'/user';
             
             response = await this.getRequests(url);
             this.sections = response.data;
@@ -254,7 +254,7 @@ const RollView = {
         },
         //load sections
         async loadClassSections(class_id){
-            url = '/sections/classes/'+class_id;
+            url = '/sections/classes/'+class_id+'/user';
             
             response = await this.getRequests(url);
             this.sections = response.data;

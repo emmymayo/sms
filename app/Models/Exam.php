@@ -29,4 +29,16 @@ class Exam extends Model
     public function examRecords(){
         return $this->hasMany(ExamRecord::class);
     }
+
+    public function termText(){
+        if($this->term==1){
+            return 'First';
+        }
+        else if($this->term==2){
+            return 'Second';
+        }
+        else if($this->term==3){
+            return 'Third';
+        }
+    }
 }
