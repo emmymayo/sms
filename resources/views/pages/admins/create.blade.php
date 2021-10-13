@@ -16,7 +16,7 @@
                 <div class="container-fluid">
                     <div class="row mb-2">
                     <div class="col-sm-6">
-                        <h1 class="m-0">Add Admin</h1>
+                        <h1 class="m-0 lead">Add Admin</h1>
                     </div><!-- /.col -->
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
@@ -67,14 +67,14 @@
               @endempty
                 <div class="card-body row">
                   <div class="form-group col-md-4">
-                    <label for="Email">Email </label>
+                    <label for="Email">*Email </label>
                     <input required type="email" class="form-control" id="email" name="email" placeholder="Enter email">
                     @error('email')
                         <div class="alert alert-danger">{{$message}}</div>
                     @enderror
                   </div>
                   <div class="form-group col-md-4">
-                    <label for="password">Password</label>
+                    <label for="password">*Password</label>
                     <input required type="password" class="form-control" id="password" name="password" placeholder="Password">
                     @error('password')
                         <div class="alert alert-danger">{{$message}}</div>
@@ -88,7 +88,7 @@
                     @enderror
                   </div>
                   <div class="form-group col-md-4">
-                    <label for="name">Full Name </label>
+                    <label for="name">*Full Name </label>
                     <input required type="text" class="form-control" id="name" name="name" placeholder="Enter your full name">
                     @error('name')
                         <div class="alert alert-danger">{{$message}}</div>
@@ -110,7 +110,7 @@
                   </div>
                   <div class="form-group col-md-6">
                         <label>Contact Information </label>
-                        <textarea class="form-control" rows="3" name="contact" placeholder="Contact Information"></textarea>
+                        <textarea class="form-control" rows="3" name="contact" placeholder="Contact Information (Optional)"></textarea>
                     @error('contact')
                         <div class="alert alert-danger">{{$message}}</div>
                     @enderror

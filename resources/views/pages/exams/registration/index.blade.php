@@ -63,7 +63,7 @@
                     </div>
                 <!-- Vue Table -->
                 <div v-show="showStudents">   
-                <table id="" class="table table-striped" >
+                <table id="" class="table table-striped table-responsive" >
                         <thead>
                             <tr>
                                 <th>#</th>
@@ -134,7 +134,7 @@
            <span class="text-success">@{{subject_registration_message}}</span>
            <hr>
             <br>
-            <table class="table table-striped">
+            <table class="table table-striped table-responsive">
                 <thead>
                             <tr>
                                 <th>#</th>

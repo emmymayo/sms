@@ -9,7 +9,7 @@ const SchoolSettings = {
             exams:[],
             active_exam:[],
             settings:[],
-            sessions:[],
+            sessions:[]
             
          
         }

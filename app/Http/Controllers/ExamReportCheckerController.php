@@ -82,7 +82,10 @@ class ExamReportCheckerController extends Controller
         else{
             $student_attendance = $record->attendance;
         }
-        $marks = Mark::where('exam_id',$exam_id)->where('student_id',$student_id)->get();
+        $marks = Mark::where('exam_id',$exam_id)
+                        ->where('student_id',$student_id)
+                        ->where('section_id', $record->section_id)
+                        ->get();
         
         $settings = Setting::all();
         //generate student avaerage score
@@ -90,6 +93,7 @@ class ExamReportCheckerController extends Controller
                                 ->selectRaw('avg(cass1+cass2+cass3+cass4+tass) as average')
                                 ->where('exam_id',$exam_id)
                                 ->where('student_id',$student_id)
+                                ->where('section_id', $record->section_id)
                                  ->first();
         //get no in section/class 
         $current_session = SchoolSetting::getSchoolSetting('current.session');

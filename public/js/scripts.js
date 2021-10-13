@@ -1,3 +1,16 @@
+//Make tables responsive
+//var responsiveInterval = setInterval(tableResponsive,3000);
+
+//clear interval after 30secs
+//setTimeout(()=>clearInterval(responsiveInterval),20000);
+function tableResponsive(){
+    var tables = document.getElementsByTagName('table');
+    for(let i = 0; i<tables.length;i++){
+        !tables[i].classList.contains('table-responsive')?tables[i].classList.add('table-responsive'):'';
+        
+    }
+}
+
 
 //time init
 setInterval(showDate,1000);

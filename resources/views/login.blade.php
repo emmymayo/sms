@@ -4,7 +4,7 @@
     </x-header> 
 
     
-    <div class="login-page " style="min-height: 466px;">
+    <div class="login-page bg-blue " style="min-height: 466px;">
             <div class="login-box">
         <!-- /.login-logo -->
         <div class="card card-outline card-primary">
@@ -12,7 +12,7 @@
             <a href="/" class="lead"><i class="fas fa-home left"> </i></a>
             </div>
             <div class="card-body">
-            <p class="login-box-msg">Sign in to start your session</p>
+            <p class="login-box-msg text-dark">Sign in to start your session</p>
                 @if (!empty(session('errors')))
                     <p class="text-danger">{{session('errors')->first('error')}}</p>
                 @endif
@@ -44,14 +44,16 @@
                     </select>
                 </div>
                 <div class="row">
+                @if(false)
                 <div class="col-8">
                     <div class="icheck-primary">
                     <input type="checkbox" id="remember" name="remember">
-                    <label for="remember">
+                    <label for="remember" class="text-dark">
                         Remember Me
                     </label>
                     </div>
                 </div>
+                @endif
                 <!-- /.col -->
                 <div class="col-4">
                     <button type="submit" class="btn btn-primary btn-block">Sign In</button>

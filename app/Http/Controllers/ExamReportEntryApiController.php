@@ -19,7 +19,9 @@ class ExamReportEntryApiController extends Controller
                     'section_id' => $section_id,
                     'subject_id' => $subject_id,
                     ])->get();
-        return response()->json($mark);
+        $assessments = config('settings.cass');
+        return response()->json(['data' => $mark,
+                                'assessments' => $assessments],200);
 
     }
 

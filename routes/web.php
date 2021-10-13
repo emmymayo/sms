@@ -28,6 +28,10 @@ use App\Http\Controllers\PromotionController;
 use App\Http\Controllers\StudentSubjectController;
 use App\Http\Controllers\TeacherSectionController;
 use App\Http\Controllers\TeacherSectionSubjectController;
+use App\Http\Controllers\TimetableController;
+use App\Http\Controllers\TimetableRecordController;
+use App\Http\Controllers\TimetableTimeslotController;
+use App\Http\Controllers\TimetableViewController;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Route;
 use App\Models\Setting;
@@ -77,7 +81,7 @@ Route::resource('teachers', TeacherController::class)->middleware('auth');
 Route::get('/teachers/get/all', [TeacherController::class,'getTeachers'])->middleware('auth');
 
 //Teacher Assignment
-Route::get('/teachers/assign/index',[TeacherController::class,'assignTeacher'])->middleware('auth');
+Route::get('/teachers/assign/index',[TeacherController::class,'assignTeacher'])->middleware(['auth','can:admin-only']);
 
 //Teacher Sections Routes
 Route::get('/teachers/{teacher_id}/sections',[TeacherSectionController::class,'getTeacherSections'])->middleware('auth');
@@ -118,6 +122,7 @@ Route::get('/classes/my-classes',[ClassApiController::class,'myClasses'])->middl
 Route::resource('sections', SectionController::class)->middleware('auth');
 Route::get('/sections/classes/{classes_id}',[SectionApiController::class,'classSections'])->middleware('auth');
 Route::get('/sections/classes/{classes_id}/user',[SectionApiController::class,'mySections'])->middleware('auth');
+Route::get('/sections/get/{section}',[SectionApiController::class,'show'])->middleware('auth');
 Route::get('/sections/user',[SectionApiController::class,'userSection'])->middleware('auth');
 
 
@@ -131,7 +136,7 @@ Route::get('/exams/find/all', [ExamController::class,'getExams'])->middleware('a
 
 
 //Exam Registration
-Route::get('/exams-registration', [ExamRegistrationController::class,'index'])->middleware(['auth','exam.registration.open']);
+Route::get('/exams-registration', [ExamRegistrationController::class,'index'])->middleware(['auth','exam.registration.open','can:admin-and-teacher-only']);
 Route::get('/exams-registration/register/{student_id}/{section_id}', [ExamRegistrationController::class,'register'])->middleware('auth');
 Route::post('/exams-registration',[ExamRegistrationController::class,'store'])->middleware(['auth','exam.registration.open']);
 Route::get('/exams-registration/subjects',[ExamRegistrationApiController::class,'SubjectIndex'])->middleware('auth');
@@ -141,21 +146,21 @@ Route::get('/exams-registration/student/{student_id}/section/{section_id}/regist
 
 
 //Exam report Entry
-Route::get('/exams-entry', [ExamReportEntryController::class,'index'])->middleware('auth');
-Route::get('/exams-entry/view', [ExamReportEntryController::class,'viewEntries'])->middleware('auth');
+Route::get('/exams-entry', [ExamReportEntryController::class,'index'])->middleware(['auth','can:admin-and-teacher-only']);
+Route::get('/exams-entry/view', [ExamReportEntryController::class,'viewEntries'])->middleware(['auth','can:admin-and-teacher-only']);
 Route::post('/exams-entry/{mark_id}/update', [ExamReportEntryController::class,'update'])->middleware('auth');
 //exam report entry 
 Route::get('/exams-entry/section/{section_id}/subject/{subject_id}', 
         [ExamReportEntryApiController::class,'sectionSubjectEntries'])->middleware('auth');
 Route::get('/exams-entry/subjects', [ExamReportEntryApiController::class,'subjectIndex'])->middleware('auth');
 
-//Exam Data Entry
-Route::get('/exams-record', [ExamRecordController::class,'index'])->middleware('auth');
+//Exam Beahavioural analysis Entry
+Route::get('/exams-record', [ExamRecordController::class,'index'])->middleware(['auth','can:admin-and-teacher-only']);
 Route::get('/exams-record/{student_id}/{section_id}', [ExamRecordController::class,'getExamRecord'])->middleware('auth');
 Route::post('/exams-record/{student_id}/{section_id}/update', [ExamRecordController::class,'update'])->middleware('auth');
 
 //Exam Report Checker
-Route::get('/exams/report/checker',[ExamReportCheckerController::class,'index'])->middleware('auth');
+Route::get('/exams/report/checker',[ExamReportCheckerController::class,'index'])->middleware(['auth','can:admin-only']);
 Route::get('/exams/report/checker/student',[ExamReportCheckerController::class,'Studentindex'])->middleware(['auth','can:student-only']);
 Route::post('/exams/report',[ExamReportCheckerController::class,'check'])->middleware('auth');
 //Route::post('/exams/report/{exam_id}/{student_id}',[ExamReportCheckerController::class,'check'])->middleware('auth');
@@ -167,8 +172,8 @@ Route::get('/subjects/get/all', [SubjectController::class,'getSubjects'])->middl
 Route::get('/subjects/get/user/{section_id}', [SubjectController::class,'mySubjects'])->middleware('auth');
 
 //Attendance Routes
-Route::get('/attendances/roll/call',[AttendanceController::class,'rollCallIndex'])->middleware('auth');
-Route::get('/attendances/roll/view',[AttendanceController::class,'rollViewIndex'])->middleware('auth');
+Route::get('/attendances/roll/call',[AttendanceController::class,'rollCallIndex'])->middleware(['auth','can:admin-and-teacher-only']);
+Route::get('/attendances/roll/view',[AttendanceController::class,'rollViewIndex'])->middleware(['auth','can:admin-and-teacher-only']);
 Route::get('/attendances/student/view',[AttendanceController::class,'studentViewIndex'])->middleware(['auth','can:student-only']);
 Route::get('/attendances/student/{student_id}/events',[AttendanceController::class,'studentEvents'])->middleware('auth');
 Route::post('/attendances/student/{student_id}/{section_id}',[AttendanceController::class,'getStudentRoll'])->middleware('auth');
@@ -197,5 +202,30 @@ Route::post('/pins/remove/{pin}',[PinController::class,'removePin'])->middleware
 
 //Promotions routes
 
-Route::get('/promotions',[PromotionController::class,'index'])->middleware('auth');
+Route::get('/promotions',[PromotionController::class,'index'])->middleware(['auth','can:admin-and-teacher-only']);
 Route::post('/promotions',[PromotionController::class,'promoteStudent'])->middleware('auth');
+
+//Timetable routes 
+Route::get('/timetables',[TimetableController::class,'index'])->middleware('auth');
+Route::get('/timetables/{timetable}',[TimetableController::class,'show'])->middleware('auth');
+Route::post('/timetables',[TimetableController::class,'store'])->middleware('auth');
+Route::put('/timetables/{timetable}',[TimetableController::class,'update'])->middleware('auth');
+Route::delete('/timetables/{timetable}',[TimetableController::class,'destroy'])->middleware('auth');
+
+//Timeslot routes
+Route::get('/timetable-timeslots',[TimetableTimeslotController::class,'index'])->middleware('auth');
+Route::get('/timetable-timeslots/{id}',[TimetableTimeslotController::class,'show'])->middleware('auth');
+Route::get('/timetable-timeslots/timetables/{timetable_id}',[TimetableTimeslotController::class,'getTimeslotsByTimetable'])->middleware('auth');
+Route::post('/timetable-timeslots',[TimetableTimeslotController::class,'store'])->middleware('auth');
+Route::put('/timetable-timeslots/{id}',[TimetableTimeslotController::class,'update'])->middleware('auth');
+Route::delete('/timetable-timeslots/{id}',[TimetableTimeslotController::class,'destroy'])->middleware('auth');
+
+//Timetable record routes
+Route::get('/timetable-records',[TimetableRecordController::class,'index'])->middleware('auth');
+Route::get('/timetable-records/{id}',[TimetableRecordController::class,'show'])->middleware('auth');
+Route::post('/timetable-records',[TimetableRecordController::class,'store'])->middleware('auth');
+Route::put('/timetable-records/{id}',[TimetableRecordController::class,'update'])->middleware('auth');
+Route::delete('/timetable-records/{id}',[TimetableRecordController::class,'destroy'])->middleware('auth');
+
+//Timetable Viewer
+Route::get('/timetable-viewer',[TimetableViewController::class,'index'])->middleware('auth');

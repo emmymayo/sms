@@ -73,15 +73,17 @@
                 <!-- Vue Table -->
                 <div v-show="show_entries">   
                 <button class="btn btn-success float-right" @click="bulkUpdate()"> <i class="fa fa-paper-plane"></i> Update</button>
-                <table id="" class="table table-striped " >
+                <table id="" class="table table-striped table-responsive" >
                         <thead>
                             <tr>
                                 <th>#</th>
                                 
                                 <th>Name</th>
-                                <th>CASS 1</th>
-                                <th>CASS 2</th>
-                                <th>TASS</th>
+                                <th v-if="assessments.indexOf('cass1')!=-1">CASS 1</th>
+                                <th v-if="assessments.indexOf('cass2')!=-1">CASS 2</th>
+                                <th v-if="assessments.indexOf('cass3')!=-1">CASS 3</th>
+                                <th v-if="assessments.indexOf('cass4')!=-1">CASS 4</th>
+                                <th v-if="assessments.indexOf('tass')!=-1">TASS</th>
                                 <th>...</th>
                             </tr>
                         </thead>
@@ -96,9 +98,11 @@
                             
                             <td>@{{entries[index].student.user.name}}</td>
                             <input type="hidden" v-model="entries[index].id" >
-                            <td><input type="text" class="form-control"   v-model="entries[index].cass1" ></td>
-                            <td><input type="text" class="form-control"  v-model="entries[index].cass2" ></td>
-                            <td><input type="text" class="form-control" v-model="entries[index].tass"></td>
+                            <td v-if="assessments.indexOf('cass1')!=-1"><input type="text" class="form-control"   v-model="entries[index].cass1" ></td>
+                            <td v-if="assessments.indexOf('cass2')!=-1"><input type="text" class="form-control"  v-model="entries[index].cass2" ></td>
+                            <td v-if="assessments.indexOf('cass3')!=-1"><input type="text" class="form-control"  v-model="entries[index].cass3" ></td>
+                            <td v-if="assessments.indexOf('cass4')!=-1"><input type="text" class="form-control"  v-model="entries[index].cass4" ></td>
+                            <td v-if="assessments.indexOf('tass')!=-1"><input type="text" class="form-control" v-model="entries[index].tass"></td>
                             
                             <td>
                             

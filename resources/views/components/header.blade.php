@@ -18,6 +18,7 @@
         <!-- Theme style -->
         <link rel="stylesheet" href="/dist/css/adminlte.min.css">
         <link rel="stylesheet" href="/css/animate.min.css">
+        <link rel="stylesheet" href="/css/custom.css">
         <style>[v-cloak]{display:none}</style>
 
         {{$slot}}
@@ -27,7 +28,8 @@
         
 </head>
 
-<body class="hold-transition sidebar-mini sidebar-collapse animate__animated animate__fadeIn animate__slow " style="height:auto;">
+<body class="hold-transition sidebar-mini sidebar-collapse animate__animated animate__fadeIn animate__slow " 
+        style="height:auto;">
     
 
     

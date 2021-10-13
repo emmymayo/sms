@@ -4,7 +4,7 @@ namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
 use App\Services\MultiDatabaseHandler;
-use Illuminate\Support\Facades\View;
+use Illuminate\Database\Eloquent\Relations\Relation;
 use App\Models\Setting;
 use App\Support\Helpers\SchoolSetting;
 
@@ -27,7 +27,9 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        View::share('settings',Setting::all());
-        
+        Relation::morphMap([
+            'sections' => 'App\Models\Section',
+            'exams' => 'App\Models\Exam'
+        ]);
     }
 }

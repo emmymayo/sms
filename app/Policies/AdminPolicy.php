@@ -35,8 +35,15 @@ class AdminPolicy
      * @return mixed
      */
     public function view(User $user, Admin $admin)
-    {
-        if($user->admin->id == $admin->id){return true;}
+    {   
+        //check if the logged in user is checking is admin and is checking his own profile
+        if($user->isAdmin()){
+            
+           return $user->admin->id == $admin->id?
+                         true:
+                         false;
+        }
+        
     }
 
     /**
@@ -59,7 +66,13 @@ class AdminPolicy
      */
     public function update(User $user, Admin $admin)
     {
-        if($user->admin->id == $admin->id){return true;}
+        //check if the logged in user is checking is admin and is checking his own profile
+        if($user->isAdmin()){
+            
+            return $user->admin->id == $admin->id?
+                          true:
+                          false;
+         }
     }
 
     /**

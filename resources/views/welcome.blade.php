@@ -137,3 +137,13 @@
 
 
 
+@auth
+        <p>Welcome</p>
+        
+        <a href="/dashboard">Dashboard</a>
+            
+        <a href="/logout">Logout</a>
+        @endauth
+        @guest
+        <a href="/login">Login</a>
+        @endguest

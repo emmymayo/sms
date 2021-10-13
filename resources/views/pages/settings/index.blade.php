@@ -111,6 +111,10 @@
                             <option value="0">No</option> 
                          </select>
                     </template>
+                    <template v-else-if="settings[index].key=== 'short.notice' ">
+                    <label class="">@{{settings[index].display_name}}</label>
+                        <textarea row="4" v-model="settings[index].value"  class="form-control" ></textarea>
+                    </template>
                     <template v-else>
                         <!--Regular Settings -->
                         <label class="">@{{settings[index].display_name}}</label>

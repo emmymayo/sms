@@ -24,8 +24,6 @@ class AdminController extends Controller
     {
         $this->authorize('viewAny', Admin::class);
             return view('pages.admins.index',[
-                'data'=> User::with(['admin','role'])->where('id',Auth::id())->get()[0],
-                'settings' => Setting::all(),
                 'admins' => Admin::all(),
                 ]);
 
@@ -41,11 +39,7 @@ class AdminController extends Controller
     {
         $this->authorize('create', Admin::class);
 
-            return view('pages.admins.create',[
-                'data'=> User::with(['admin','role'])->where('id',Auth::id())->get()[0],
-                'settings' => Setting::all(),
-                
-                ]);
+            return view('pages.admins.create');
         
     }
 
@@ -72,7 +66,7 @@ class AdminController extends Controller
         try{
             $upload_success = DB::transaction( function() use($request) {
                     //retrieve admin role
-            $role = Role::where('name','admin')->first();
+            $role = Role::firstWhere('name','admin');
             
             //create new user record
             $user = new User([
@@ -94,8 +88,8 @@ class AdminController extends Controller
                 $filename = $userId.".".$extension;
                 $path = $request->photo->storeAs('images',$filename,'public');
                 $user->avatar = $path;
-                $user->save();
-                return true;
+                return $user->save();
+                
                 
             }else{return false;}
             
@@ -103,7 +97,7 @@ class AdminController extends Controller
         }catch(Exception $e){
             back()->with('admin-added-fail', 'Something went wrong. Try again later.');
         }
-        if($upload_success){ back()->with('admin-added-success', 'Admin Added Successfully');}
+        if($upload_success){return back()->with('admin-added-success', 'Admin Added Successfully');}
         else{return back()->with('photo-upload-fail','Record Added Without Photo.');}
         
         
@@ -120,8 +114,6 @@ class AdminController extends Controller
         $this->authorize('view',$admin);
 
             return view('pages.admins.profile',[
-                'data'=> User::with(['admin','role'])->where('id',Auth::id())->get()[0],
-                'settings' => Setting::all(),
                 'profile' => $admin,
                 ]);
        

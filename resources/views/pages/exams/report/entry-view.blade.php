@@ -79,15 +79,17 @@
                 <!-- Vue Table -->
                 <div v-show="showEntries">   
                
-                <table id="" class="table table-striped" >
+                <table id="" class="table table-striped table-responsive" >
                         <thead>
                             <tr>
                                 <th>#</th>
                                 
                                 <th>Name</th>
-                                <th>CASS 1</th>
-                                <th>CASS 2</th>
-                                <th>TASS</th>
+                                <th v-if="assessments.indexOf('cass1')!=-1">CASS 1</th>
+                                <th v-if="assessments.indexOf('cass2')!=-1">CASS 2</th>
+                                <th v-if="assessments.indexOf('cass3')!=-1">CASS 3</th>
+                                <th v-if="assessments.indexOf('cass4')!=-1">CASS 4</th>
+                                <th v-if="assessments.indexOf('tass')!=-1">TASS</th>
                                 <th>Total</th>
                             </tr>
                         </thead>
@@ -102,10 +104,17 @@
                             
                             <td>@{{entries[index].student.user.name}}</td>
                             
-                            <td>@{{entry.cass1}}</td>
-                            <td>@{{entry.cass2}}</td>
-                            <td>@{{entry.tass}}</td>
-                            <td>@{{entry.tass+entry.cass1+entry.cass2}}</td>
+                            <td v-if="assessments.indexOf('cass1')!=-1">@{{entry.cass1}}</td>
+                            <td v-if="assessments.indexOf('cass2')!=-1">@{{entry.cass2}}</td>
+                            <td v-if="assessments.indexOf('cass3')!=-1">@{{entry.cass3}}</td>
+                            <td v-if="assessments.indexOf('cass4')!=-1">@{{entry.cass4}}</td>
+                            <td v-if="assessments.indexOf('tass')!=-1">@{{entry.tass}}</td>
+                            <td>@{{(!isNaN(parseInt(entry.tass,10))? parseInt(entry.tass,10):0)+
+                                   (!isNaN(parseInt(entry.cass1,10))? parseInt(entry.cass1,10):0) +
+                                   (!isNaN(parseInt(entry.cass2,10))? parseInt(entry.cass2,10):0) +
+                                   (!isNaN(parseInt(entry.cass3,10))? parseInt(entry.cass3,10):0) +
+                                   (!isNaN(parseInt(entry.cass4,10))? parseInt(entry.cass4,10):0) 
+                                   }}</td>
                             
                             </tr>   
                             

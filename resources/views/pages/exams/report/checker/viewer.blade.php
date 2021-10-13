@@ -28,21 +28,24 @@
                     height="100" width="50" alt="">
             </div>
             <div id="school-info my-3">
-                <h3 class="text-center text-uppercase" id="school-name">{{$settings->where('key','school.name')->first()['value']}}</h3>
-                <h5 class="text-center text-uppercase" id="school-address">{{$settings->where('key','school.address')->first()['value']}}</h3>
-                <h6 class="text-center text-muted text-uppercase" id="school-motto">Motto:{{$settings->where('key','school.motto')->first()['value']}}</h3>
+                <h4 class="text-center text-uppercase" id="school-name">{{$settings->where('key','school.name')->first()['value']}}</h4>
+                <h5 class="text-center text-uppercase" id="school-address">{{$settings->where('key','school.address')->first()['value']}}</h5>
+                <h6 class="text-center text-muted text-uppercase" id="school-motto">Motto:{{$settings->where('key','school.motto')->first()['value']}}</h6>
             </div>
             <div id="exam-info my-3">
-                <h4 class="lead text-center text-uppercase my-4">
+                <h5 class="lead font-weight-bold text-center text-uppercase my-4">
                     {{$exam->termText()}} Term {{$exam->session->start.'/'.$exam->session->end}} Session Report 
-                </h4>
+                </h5>
             </div>
-            <div id="student-info my-3 mx-auto">
+            <div id="student-info my-3 ">
                 <div class="row mx-auto px-5">
                 
                     <div class="col-sm-5 row ">
                         <div class="col-sm-12 mb-3 text-uppercase" id="student-name">Name: {{$record->student->user->name}}</div>
-                        <div class="col-sm-12 mb-3 text-uppercase" id="student-class">Class: {{$record->section->classes->name.' '.$record->section->name}}</div>
+                        <div class="col-sm-12 mb-3 text-uppercase" id="student-class">Class: {{$record->section->classes->name.' '}} 
+                                                                                            {{$record->section->name=='general' ? ''
+                                                                                              : $record->section->name}}
+                        </div>
                         <div class="col-sm-12 mb-3 text-uppercase" id="student-gender">Gender: {{$record->student->gender}}</div>
                         <div class="col-sm-12 mb-3 text-uppercase" id="student-average">Average: {{round($student_average,1)}} </div>
                     </div>
@@ -65,9 +68,9 @@
         <div id="result-scores ">
 
         <div class="card card-outline card-secondary mt-5"></div>
-        <div class="text-uppercase text-muted my-2">Cognitive Ability</div>
-            <table class="table text-uppercase">
-                <tr class="text-uppercase p-5  text-center">
+        <div class="text-uppercase text-center text-muted my-2">Cognitive Ability</div>
+            <table class="table text-uppercase ">
+                <tr class="text-uppercase  p-5  text-center">
                     <th class="text-left">Subjects</th>
                     @foreach (config('settings.cass') as $cass )
                         <th class="">{{$cass}}</th>
@@ -104,7 +107,7 @@
 
         <div class="" id="student-skills">
             <div class="card card-outline card-secondary mt-5"></div>
-            <div class="text-uppercase text-muted my-2">Behavioural Assessment</div>
+            <div class="text-uppercase text-center text-muted my-2">Behavioural Assessment</div>
             <div class="card card-outline card-secondary "></div>
             
             <div class="row">

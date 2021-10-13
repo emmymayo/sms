@@ -83,7 +83,7 @@
                 <!-- Vue Table -->
                 <div v-show="show_rolls" class="animate__animated animate__slideIn animate__slow">   
                 
-                <table id="" class="table table-striped" >
+                <table id="" class="table table-striped table-responsive" >
                         <thead>
                             <tr>
                                 <th>#</th>

@@ -72,7 +72,7 @@
                 <!-- Vue Table -->
                 <div v-show="show_students">   
                 
-                <table id="" class="table table-striped" >
+                <table id="" class="table table-striped table-responsive" >
                         <thead>
                             <tr>
                                 <th>#</th>
@@ -138,7 +138,7 @@
                                 <input class="form-control" type="text" v-model="selected_student.comment2">
                             </div>
                             <div class="col-md-3  form-group" v-for="(skill,index) in selected_student.skills">
-                                <label for="">@{{skill.name}}:</label>
+                                <label for="">@{{skill.name}}: @{{selected_student.skills[index].value}}</label>
                                 <input class="form-control " type="range" 
                                 step="1" :min="skill.min" :max="skill.max" 
                                  v-model="selected_student.skills[index].value">

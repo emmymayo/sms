@@ -30,6 +30,10 @@ class Exam extends Model
         return $this->hasMany(ExamRecord::class);
     }
 
+    public function timetable(){
+        return $this->morphOne(Timetable::class,'scheduleable');
+    }
+
     public function termText(){
         if($this->term==1){
             return 'First';

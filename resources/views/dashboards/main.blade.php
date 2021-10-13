@@ -35,17 +35,18 @@
                 <!-- Main content -->
                 <div class="content">
                 <div class="container-fluid ">
+                   
+                    <div class="card card-outline card-primary"></div>
+                    <div class="row  my-2 ">
+                        <div class="col-md-12 text-right mx-auto my-2   text-center">
+                            
+                            <span id="dashTime" class="font-weight-light h3 "></span>	<br>
+			                <span id="dashDate" class="font-weight-light h3 "></span>
+                        </div>
+                    </div>
                     @can('admin-only')
                     <x-info-box />
                     @endcan
-                    <div class="card card-outline card-primary"></div>
-                    <div class="row mx-md-4 my-2 ">
-                        <div class="col-md-4 float-right shadow p-3">
-                            <div class="text-muted" > <i class="far fa-calendar-alt fa-2x "></i></div>
-                            <div id="dashTime" class="font-weight-light h2 "></div>	
-			                <div id="dashDate" class="font-weight-light h1"></div>
-                        </div>
-                    </div>
                     @can('student-only')
                     <div class="row my-5">
                         <div class="col-md-3 mb-2 rounded  mx-auto col-sm-6 col-12 card-outline card-success shadow bg-white">
@@ -252,7 +253,7 @@
                    
 <hr>
 
-                    <div id="calendar" class="text-muted bg-white rounded card card-outline card-primary shadow mx-md-5 "></div>
+                    <div id="calendar" class="text-muted bg-white rounded card card-outline card-primary shadow  "></div>
                     
                 </div><!-- /.container-fluid -->
                 </div>

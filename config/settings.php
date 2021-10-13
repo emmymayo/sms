@@ -11,10 +11,10 @@ return [
             'name' => 'SMS Academy', 
             'db' =>'sms',
         ],
-        'other' => [
-            'name' => "Other Int'l Academy",
-            'db' => 'otherdb'
-        ],
+        // 'other' => [
+        //     'name' => "Other Int'l Academy",
+        //     'db' => 'sms_2'
+        // ],
 
     ],
 
@@ -26,6 +26,10 @@ return [
     'cass4'=>['max'=>0], //not used
     'tass' =>['max'=>60],
 
+    /*
+     *Define grade system for results
+     * 
+     */
     'grades' => [
         ['from'=> 70, 'to'=> 100,'remark'=> 'Excellent','grade' =>'A'],
         ['from'=> 60, 'to'=> 69.9, 'remark' => 'V. Good','grade' => 'B'],
@@ -35,6 +39,10 @@ return [
         
     ],
 
+    /*
+     *Define behavioural assessment abilities
+     * 
+     */
     'skills' => [
         ['name'=> 'Handwriting','value' => 5,'max' => 5, 'min' => 1],
         ['name'=> 'Verbal Fluency','value' => 5,'max' => 5, 'min' => 1],

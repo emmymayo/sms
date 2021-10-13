@@ -3,6 +3,8 @@
 namespace Database\Factories;
 
 use App\Models\Admin;
+use App\Models\User;
+use App\Models\Role;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class AdminFactory extends Factory
@@ -22,7 +24,8 @@ class AdminFactory extends Factory
     public function definition()
     {
         return [
-            //
+            'user_id' => User::factory(),
+            'contact' => $this->faker->address
         ];
     }
 }

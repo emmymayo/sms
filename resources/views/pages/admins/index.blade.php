@@ -74,7 +74,7 @@
 
                 
                 
-                    <table id="admin_table" class="table table-striped">
+                    <table id="admin_table" class="table table-striped table-responsive">
                         <thead>
                             <tr>
                                 <th>#</th>
@@ -95,7 +95,7 @@
                             <tr>
                             <td>{{$admin_count}}</td>
                             <td>{{$admin->user->name}}</td>
-                            <td><img src="/storage/{{$admin->user->avatar}}" alt="Avatar" height="60" width="80"></td>
+                            <td><img src="/storage/{{$admin->user->avatar}}" class="rounded-circle" alt="Avatar" height="60" width="80"></td>
                             <td>{{$admin->user->email}}</td>
                             <td>{{$admin->phone}}</td>
                             <td>{{$admin->user->status==1? 'Active':'Suspended'}}</td>

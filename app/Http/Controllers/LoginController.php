@@ -10,10 +10,11 @@ use App\Models\User;
 
 class LoginController extends Controller
 {
-    public function login(Request $request, MultiDatabaseHandler $mdbHandler){
+    public function login(Request $request){
 
         
         try {
+            $mdbHandler = new MultiDatabaseHandler();
             $mdbHandler->setWorkingDatabase($request->school);
             if(Auth::attempt([
                 'email' => $request->email,
@@ -22,7 +23,9 @@ class LoginController extends Controller
             ],$request->remember))
                 {
                     $request->session()->regenerate() ;
-                    //$mdbHandler->setWorkingDatabase($request->school);
+                    $mdbHandler->setWorkingDatabase($request->school);
+                    echo session('working_db');
+                    echo config('database.connections.mysql.database');
                     return redirect('dashboard');
                     
                 }

@@ -92,7 +92,7 @@
                             <tr>
                             <td>{{$loop->index+1}}</td>
                             <td>{{$teacher->user->name}}</td>
-                            <td><img src="/storage/{{$teacher->user->avatar}}" alt="Avatar" height="60" width="80"></td>
+                            <td><img src="/storage/{{$teacher->user->avatar}}" class="rounded-circle" alt="Avatar" height="60" width="80"></td>
                             <td>{{$teacher->user->email}}</td>
                             <td>{{$teacher->phone}}</td>
                             <td>{{$teacher->user->status==1? 'Active':'Suspended'}}</td>

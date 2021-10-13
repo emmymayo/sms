@@ -70,7 +70,7 @@ class SectionApiController extends Controller
      */
     public function show(Section $section)
     {
-        
+        return response()->json($section);
     }
 
     /**

@@ -9,7 +9,7 @@
    
             
             <x-nav-header />
-            <x-sidebar-nav :name="$data->name" :avatar="$data->avatar"  />
+            <x-sidebar-nav   />
             <x-sidebar-control />
            
 

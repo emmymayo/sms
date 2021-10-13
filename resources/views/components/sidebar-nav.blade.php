@@ -2,7 +2,7 @@
     <!-- Brand Logo -->
     <a href="/" class="brand-link">
       <img src="/storage/{{$settings->firstWhere('key','school.logo')['value']}}" alt="Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
-      <span class="brand-text font-weight-light">{{$settings->firstWhere('key','school.name')['value']}}</span>
+      <span class="brand-text text-wrap small wrap font-weight-lighter">{{$settings->firstWhere('key','school.name')['value']}}</span>
     </a>
 
     <!-- Sidebar -->
@@ -222,6 +222,33 @@
                 <i class="nav-icon fa fa-forward"></i>
                 <p>Promotions</p>
               </a>
+          </li>
+
+          
+          <li class="nav-item">
+            <a href="#" class="nav-link">
+              <i class="nav-icon fas fa-calendar-alt"></i>
+              <p>Timetables</p>
+              <i class="right fas fa-angle-left"></i>
+            </a>
+
+            <ul class="nav nav-treeview">
+              @can('admin-and-teacher-only')
+              <li class="nav-item">
+              <a href="/timetables" class="nav-link">
+                <i class="nav-icon fas fa-calendar"></i>
+                <p>Manage Timetables</p>
+              </a>
+              </li>
+              @endcan
+              <li class="nav-item">
+              <a href="/timetable-viewer" class="nav-link">
+                
+                <i class="nav-icon fas fa-eye"></i>
+                <p>View Timetable</p>
+              </a>
+              </li>
+            </ul>
           </li>
 
           @endcan

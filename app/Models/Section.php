@@ -24,4 +24,8 @@ class Section extends Model
     public function examRecords(){
         return $this->hasMany(ExamRecord::class);
     }
+
+    public function timetable(){
+        return $this->morphOne(Timetable::class,'scheduleable');
+    }
 }

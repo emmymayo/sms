@@ -191,9 +191,12 @@ const ExamEntry = {
             subjects:[],
             sections: [],
             entries: [],
+            assessments: [],
             showEntries: false,
             cass1:null,
             cass2:null,
+            cass3:null,
+            cass4:null,
             tass:null,
             selected_subjects:[],
             entries_for_upload:[],
@@ -255,7 +258,9 @@ const ExamEntry = {
             
             response = await this.getRequests(url);
             
-            this.entries = response.data;
+            this.entries = response.data.data;
+            this.assessments = response.data.assessments;
+            
             this.show_entries = true;
            
             
@@ -268,7 +273,11 @@ const ExamEntry = {
                 mark_id = entries[i].id;
                 payload = {
                     '_token':token,'mark_id':entries[i].id,
-                    'cass1':entries[i].cass1,'cass2':entries[i].cass2,'tass':entries[i].tass
+                    'cass1':entries[i].cass1,
+                    'cass2':entries[i].cass2,
+                    'cass3':entries[i].cass3,
+                    'cass4':entries[i].cass4,
+                    'tass':entries[i].tass
                 };
                 
                 let response = await this.postRequests(`/exams-entry/${mark_id}/update`,payload);
@@ -354,10 +363,13 @@ const ExamEntryView = {
             subjects:[],
             sections: [],
             entries: [],
+            assessments: [],
             showEntries: false,
-            cass1:null,
-            cass2:null,
-            tass:null,
+            cass1:0,
+            cass2:0,
+            cass3:0,
+            cass4:0,
+            tass:0,
             selected_subjects:[],
        
 
@@ -415,12 +427,12 @@ const ExamEntryView = {
             
             response = await this.getRequests(url);
            
-            this.entries = response.data;
+            this.entries = response.data.data;
+            this.assessments = response.data.assessments;
             this.showEntries = true;
-           
-            
-            
+             
         },
+       
 
     },
 

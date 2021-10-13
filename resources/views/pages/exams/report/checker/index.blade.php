@@ -79,7 +79,7 @@
                 <!-- Vue Table -->
                 <div v-show="show_students">   
                 
-                <table id="" class="table table-striped" >
+                <table id="" class="table table-striped table-responsive" >
                         <thead>
                             <tr>
                                 <th>#</th>
