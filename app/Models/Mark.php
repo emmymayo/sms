@@ -22,7 +22,7 @@ class Mark extends Model
 
     public function __construct()
     {
-        
+        //show only cass listed in config ND HIDE OTHERS
         $this->hidden =  collect($this->entries)->filter(function($value){
                             if (!in_array($value,config('settings.cass'))){
                                 return $value;
@@ -83,14 +83,19 @@ class Mark extends Model
         return $position ;
     }
 
-    public function studentAverageScore(){
-       
-    }
-    public function scoreGrade(){
-        
-    }
-
-    public function scoreRemark(){
-
-    }
+   public function getCass1Attribute($value){
+       return $value+0;
+   }
+   public function getCass2Attribute($value){
+       return $value+0;
+   }
+   public function getCass3Attribute($value){
+       return $value+0;
+   }
+   public function getCass4Attribute($value){
+       return $value+0;
+   }
+   public function getTassAttribute($value){
+       return $value+0;
+   }
 }

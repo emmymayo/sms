@@ -12,7 +12,43 @@
 
     <!-- Right navbar links -->
     <ul class="navbar-nav ml-auto">
-   
+
+    
+      <!-- Messages Dropdown Menu -->
+      <li class="nav-item dropdown">
+        <a class="nav-link" data-toggle="dropdown" href="#">
+          <i class="far fa-comments"></i>
+          <span class="badge badge-danger navbar-badge">{{count($notices)==0?'':count($notices)}}</span>
+        </a>
+        <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right ">
+          
+          
+          @foreach ($notices as $notice)
+            
+          <a href="/notices/{{$notice->id}}" class="dropdown-item" style="word-wrap:break-word">
+            <!-- Message Start -->
+            <div class="media " >
+              <!-- <img src="../../dist/img/user1-128x128.jpg" alt="User Avatar" class="img-size-50 mr-3 img-circle"> -->
+              <div class="media-body ">
+                <div class="h6 small font-weight-bold " >
+                  {{$notice->title}}
+                  <!-- <span class="float-right text-sm text-primary"><i class="fas fa-star"></i></span> -->
+                </div>
+                <p class="text-sm small ">{{substr($notice->message, 0,30).'...'}}</p>
+                <!-- <p class="text-sm text-muted"><i class="far fa-clock mr-1"></i> </p> -->
+              </div>
+            </div>
+            <!-- Message End -->
+            </a>
+         
+          @endforeach
+         
+          
+          <div class="dropdown-divider"></div>
+          @if(count($notices)>0)<a href="/notices/list" class="dropdown-item dropdown-footer">See all</a>@endif
+        </div>
+      </li>
+   <!-- End of Message dropdown Menu -->
     <li class="nav-item">
         <a class="nav-link" data-widget="fullscreen" href="#" role="button">
           <i class="fas fa-expand-arrows-alt"></i>

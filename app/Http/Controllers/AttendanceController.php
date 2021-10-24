@@ -2,13 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Resources\AttendanceEventResource as ResourcesAttendanceEventResource;
+
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
 use App\Models\Attendance;
 use App\Support\Helpers\SchoolSetting;
-use App\Resources\AttendanceEventResource;
+use App\Http\Resources\AttendanceEventResource;
 class AttendanceController extends Controller
 {
     
@@ -74,7 +74,7 @@ class AttendanceController extends Controller
     public function studentEvents($student_id){
         $exam_id = SchoolSetting::getSchoolSetting('active.exam');
         $attendances = Attendance::where(['exam_id'=>$exam_id,'student_id' => $student_id])->get();
-        return ResourcesAttendanceEventResource::collection($attendances);
+        return AttendanceEventResource::collection($attendances);
         
     }
 }

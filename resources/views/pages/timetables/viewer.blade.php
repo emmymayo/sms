@@ -50,10 +50,14 @@
                                 <button class="btn btn-primary" @click="loadTimetable">Load Timetable</button>
                             </div>
                         </div>
-
-                        <div v-show="show_timetable" class="my-2">
+                        <!-- print button -->
+                        <div v-show="show_timetable">
+                                <button class="btn btn-primary float-right" @click="printTimetable"><i class="fa fa-print"></i>Print</button>
+                        </div>
+                        <div v-show="show_timetable" class="my-2" id="printable">
+                            
                             <template v-if="timetable_type=='sections'">
-                            <table class="table table-striped table-bordered table-responsive">
+                            <table class="table table-striped  table-responsive">
                                 <tr>
                                     <th></th>
                                     <th class="text-center" v-for="(timeslot_list,timeslot_list_index) in timetable_timeslots" :key="timeslot_list_index">

@@ -3107,6 +3107,7 @@ input[type=button].btn-block {
   margin-right: 0.125rem;
 }
 .dropleft .dropdown-toggle::after {
+  word
   display: inline-block;
   margin-left: 0.255em;
   vertical-align: 0.255em;

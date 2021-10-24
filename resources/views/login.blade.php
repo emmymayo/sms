@@ -37,7 +37,7 @@
                 <div class="form-group">
                     <label class="small my-2" for="selectSchool">Select School</label>
                     <select class="form-control" name="school" id="selectSchool" required>
-                        <option value=""> </option>
+                     
                         @foreach (config('settings.schools') as $school)
                             <option value="{{$school['db']}}"> {{$school['name']}}</option>
                         @endforeach

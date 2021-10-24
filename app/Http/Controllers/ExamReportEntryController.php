@@ -18,11 +18,11 @@ class ExamReportEntryController extends Controller
 
     public function update(Request $request,$mark_id){
         $request->validate([
-            'cass1' =>  ['nullable','integer','max:'.config('settings.cass1.max')],
-            'cass2' =>  ['nullable','integer','max:'.config('settings.cass2.max')],
-            'cass3' =>  ['nullable','integer','max:'.config('settings.cass3.max')],
-            'cass4' =>  ['nullable','integer','max:'.config('settings.cass4.max')],
-            'tass' =>  ['nullable','integer','max:'.config('settings.tass.max')],
+            'cass1' =>  ['nullable','numeric','max:'.config('settings.cass1.max')],
+            'cass2' =>  ['nullable','numeric','max:'.config('settings.cass2.max')],
+            'cass3' =>  ['nullable','numeric','max:'.config('settings.cass3.max')],
+            'cass4' =>  ['nullable','numeric','max:'.config('settings.cass4.max')],
+            'tass' =>  ['nullable','numeric','max:'.config('settings.tass.max')],
         ]);
        // return response()->json(['message'=>$request->input('cass2')],201);
        //set request value and add 0 for columns not available

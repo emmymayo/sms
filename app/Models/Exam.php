@@ -10,6 +10,8 @@ use App\Models\Mark;
 class Exam extends Model
 {
     use HasFactory;
+    
+    protected $with=['session'];
 
     public function session(){
        return $this->belongsTo(Session::class);

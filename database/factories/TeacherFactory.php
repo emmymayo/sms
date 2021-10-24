@@ -3,6 +3,7 @@
 namespace Database\Factories;
 
 use App\Models\Teacher;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class TeacherFactory extends Factory
@@ -22,7 +23,9 @@ class TeacherFactory extends Factory
     public function definition()
     {
         return [
-            //
+            'user_id' => User::factory(),
+            'qualification' => $this->faker->randomElement(['NCE','ND','HND','BSc']),
+            'gender' => $this->faker->randomElement(['Male','Female']),
         ];
     }
 }

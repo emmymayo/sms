@@ -33,6 +33,12 @@
               <p>Dashboard</p>
             </a>
           </li>
+          <li class="nav-item">
+            <a href="/notices/list" class="nav-link">
+              <i class="nav-icon fas fa-bullhorn"></i>
+              <p>Notices</p>
+            </a>
+          </li>
           @can('student-only')
           <li class="nav-item">
             <a href="/exams/report/checker/student" class="nav-link">
@@ -139,6 +145,18 @@
               <p>Subjects</p>
             </a>
           </li>
+          <li class="nav-item">
+            <a href="/gradesystems" class="nav-link">
+              <i class="nav-icon fas fa-star"></i>
+              <p>Grade System</p>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="/notices" class="nav-link">
+              <i class="nav-icon fas fa-info"></i>
+              <p>Manage Notices</p>
+            </a>
+          </li>
           @endcan
           @can('admin-and-teacher-only')
           <li class="nav-item">
@@ -172,13 +190,19 @@
                 <li class="nav-item">
                   <a href="/exams-entry/view" class="nav-link">
                     <i class="nav-icon fas fa-eye"></i>
-                    <p>Exam Score View</p>
+                    <p>View Exam Scores</p>
                   </a>
                 </li>
                 <li class="nav-item">
                   <a href="/exams-record" class="nav-link">
                     <i class="nav-icon fas fa-file"></i>
                     <p>Behavioural Analysis</p>
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a href="/exams/students/broadsheet" class="nav-link">
+                    <i class="nav-icon fas fa-file"></i>
+                    <p>View Broadsheet</p>
                   </a>
                 </li>
                 @can('admin-only')

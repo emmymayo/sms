@@ -36,6 +36,13 @@ class ExamRecordController extends Controller
 
     public function update(Request $request, $student_id,$section_id){
         
+        $request->validate([
+            'attendance' => 'nullable',
+            'comment1' => 'nullable',
+            'comment2' => 'nullable',
+            'skills' => 'nullable|array',
+
+        ]);
         $exam_id = SchoolSetting::getSchoolSetting('active.exam');
         $record = ExamRecord::firstWhere([
             'exam_id' => $exam_id,

@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use App\Models\Timetable;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
@@ -137,5 +138,20 @@ class TimetableTimeslotControllerTest extends TestCase
         $response->assertSuccessful();
        $response->assertExactJson(['message'=>'success']);
         
+    }
+
+    public function test_timeslots_by_timetable(){
+        $role = \App\Models\Role::firstWhere('name','admin');
+        $user = $role->users()->first();
+        $this->actingAs($user);
+        $this->assertAuthenticated();
+        $timetable = Timetable::firstWhere('id','>',0);
+        $url = '/timetable-timeslots/timetables/'.$timetable->id;
+        $response = $this->get($url);
+
+        $response->assertSuccessful();
+        $response->dump();
+
+
     }
 }

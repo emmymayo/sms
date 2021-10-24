@@ -34,13 +34,18 @@ class AuthServiceProvider extends ServiceProvider
     public function boot()
     {
         $this->registerPolicies();
+        Gate::define('super-only', function(User $user){
+            if( $user->role->name == 'super'){
+                return true;
+            }else{return false;}
+        });
         Gate::define('admin-only', function(User $user){
-            if($user->role->name == 'admin' OR $user->role->name == 'sa'){
+            if($user->role->name == 'admin' OR $user->role->name == 'super'){
                 return true;
             }else{return false;}
         });
         Gate::define('admin-and-teacher-only', function(User $user){
-            if($user->role->name == 'admin' OR $user->role->name == 'teacher'){
+            if($user->role->name == 'admin' OR $user->role->name == 'super' OR $user->role->name == 'teacher'){
                 return true;
             }else{return false;}
         });

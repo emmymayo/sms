@@ -31,6 +31,11 @@ class ClassesController extends Controller
                 ]);
     }
 
+    public function getClasses()
+    {
+        return response()->json(Classes::all(),200);
+    }
+
     /**
      * Show the form for creating a new resource.
      *

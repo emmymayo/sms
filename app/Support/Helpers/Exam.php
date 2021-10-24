@@ -2,6 +2,7 @@
 
 namespace App\Support\Helpers;
 
+use App\Models\Section;
 use App\Models\Setting;
 
 class Exam {
@@ -36,8 +37,8 @@ class Exam {
     }
 
     public static function  getWordScoreRemark($value){
-		$grades = config('settings.grades');
-        $remark = null;
+		$grades = \App\Models\GradeSystem::all();
+        $remark = '';
         foreach ($grades as $key => $grade) {
             if( ($value >= $grade['from']) AND ($value <= $grade['to']) ){
                 $remark = $grade['remark'];
@@ -48,8 +49,8 @@ class Exam {
     
 	}
 	public static function getLetterScoreRemark($value){
-		$grades = config('settings.grades');
-        $remark = null;
+		$grades = \App\Models\GradeSystem::all();
+        $remark = '';
         foreach ($grades as $key => $grade) {
             if( ($value >= $grade['from']) AND ($value <= $grade['to']) ){
                 $remark = $grade['grade'];
@@ -58,6 +59,24 @@ class Exam {
         }
         return $remark;
 	}
+
+    public static function getStudentSection($student_id, $session_id){
+        $section = Section::whereIn('id',function($query) use($student_id,$session_id){
+                $query->select('section_id')
+                      ->from('students_sections_sessions')
+                      ->where('student_id',$student_id)
+                      ->where('session_id',$session_id)
+                      ->get();
+        })->first();
+
+        return $section;
+    }
+
+    public static function getStudentCurrentSection($student_id){
+        $current_session_id = SchoolSetting::getSchoolSetting('current.session');
+        return self::getStudentSection($student_id,$current_session_id);
+    }
+    
     
 }
 

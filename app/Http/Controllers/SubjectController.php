@@ -28,6 +28,23 @@ class SubjectController extends Controller
         return response()->json($subjects,200);
     }
 
+    public function getExamSectionSubjects($exam_id,$section_id){
+        //retrieve subjects students in a section (section_id) registered
+        // during an exam (exam_id)
+        $subjects = Subject::whereIn('id',
+                            function($query) use($exam_id,$section_id){
+                                $query->select('subject_id')
+                                    ->from('marks')
+                                    ->where([
+                                        "exam_id"=>$exam_id,
+                                        "section_id" => $section_id
+                                    ])->get();
+                            }    
+                    )->get();
+
+        return response()->json($subjects);
+    }
+
     public function mySubjects($section_id){
         $user = User::find(Auth::id());
         $subjects = null;

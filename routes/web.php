@@ -21,10 +21,15 @@ use App\Http\Controllers\ExamReportEntryApiController;
 use App\Http\Controllers\SectionApiController;
 use App\Http\Controllers\StudentApiController;
 use App\Http\Controllers\AttendanceController;
+use App\Http\Controllers\ExamBroadsheetController;
+use App\Http\Controllers\GradeSystemController;
+use App\Http\Controllers\MarkController;
+use App\Http\Controllers\NoticeController;
 use App\Http\Controllers\SettingController;
 use App\Http\Controllers\PinController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\PromotionController;
+use App\Http\Controllers\RoleController;
 use App\Http\Controllers\StudentSubjectController;
 use App\Http\Controllers\TeacherSectionController;
 use App\Http\Controllers\TeacherSectionSubjectController;
@@ -94,6 +99,7 @@ Route::post('/teachers/{teacher_id}/sections/{section_id}/toggle',[TeacherSectio
 //Student  Routes
 Route::resource('students', StudentController::class)->middleware('auth');
 Route::post('/students/{student}/set-class',[StudentController::class,'setClass'])->middleware('auth');
+Route::get('/students/exams/{exam_id}/sections/{section_id}',[StudentController::class,'getExamSectionStudents'])->middleware('auth');
 Route::get('/students/section/{section_id}',[StudentApiController::class,'sectionIndex'])->middleware('auth');
 Route::get('/students/{student}/find',[StudentApiController::class,'show'])->middleware('auth');
 
@@ -114,8 +120,8 @@ Route::post('/classes',[ClassesController::class,'store'])->middleware('auth');
 Route::get('/classes/{classes}/edit',[ClassesController::class,'edit'])->middleware('auth');
 Route::patch('/classes/{classes}',[ClassesController::class,'update'])->middleware('auth');
 Route::delete('/classes/{classes}',[ClassesController::class,'destroy'])->middleware('auth');
-Route::get('/classes/all',[ClassApiController::class,'index'])->middleware('auth'); 
-Route::get('/classes/my-classes',[ClassApiController::class,'myClasses'])->middleware('auth'); 
+Route::get('/classes/all',[ClassesController::class,'getClasses'])->middleware('auth'); 
+
 
 
 //Sections Routes
@@ -165,11 +171,18 @@ Route::get('/exams/report/checker/student',[ExamReportCheckerController::class,'
 Route::post('/exams/report',[ExamReportCheckerController::class,'check'])->middleware('auth');
 //Route::post('/exams/report/{exam_id}/{student_id}',[ExamReportCheckerController::class,'check'])->middleware('auth');
 
+//MArks Routes
+// get marks by applying filters (student_id,section_id etc) and ordering direction
+Route::get('/marks/get',[MarkController::class,'getMarks'])->middleware('auth');
+
+//Broadsheet
+Route::get('/exams/students/broadsheet',[ExamBroadsheetController::class,'index'])->middleware(['auth','can:admin-and-teacher-only']);
 
 //Subjects  Routes
 Route::resource('subjects', SubjectController::class)->middleware('auth');
 Route::get('/subjects/get/all', [SubjectController::class,'getSubjects'])->middleware('auth');
 Route::get('/subjects/get/user/{section_id}', [SubjectController::class,'mySubjects'])->middleware('auth');
+Route::get('/subjects/exams/{exam_id}/sections/{section_id}', [SubjectController::class,'getExamSectionSubjects'])->middleware('auth');
 
 //Attendance Routes
 Route::get('/attendances/roll/call',[AttendanceController::class,'rollCallIndex'])->middleware(['auth','can:admin-and-teacher-only']);
@@ -229,3 +242,23 @@ Route::delete('/timetable-records/{id}',[TimetableRecordController::class,'destr
 
 //Timetable Viewer
 Route::get('/timetable-viewer',[TimetableViewController::class,'index'])->middleware('auth');
+
+//Grade Systems Routes
+Route::get('/gradesystems',[GradeSystemController::class,'index'])->middleware('auth');
+Route::get('/gradesystems/{id}',[GradeSystemController::class,'show'])->middleware('auth');
+Route::post('/gradesystems',[GradeSystemController::class,'store'])->middleware('auth');
+Route::put('/gradesystems/{id}',[GradeSystemController::class,'update'])->middleware('auth');
+Route::delete('/gradesystems/{id}',[GradeSystemController::class,'destroy'])->middleware('auth');
+
+//Notices
+
+Route::get('/notices',[NoticeController::class,'index'])->middleware('auth');
+Route::get('/notices/list',[NoticeController::class,'list'])->middleware('auth');
+Route::get('/notices/{id}',[NoticeController::class,'show'])->middleware('auth');
+Route::post('/notices',[NoticeController::class,'store'])->middleware('auth');
+Route::put('/notices/{id}',[NoticeController::class,'update'])->middleware('auth');
+Route::delete('/notices/{id}',[NoticeController::class,'destroy'])->middleware('auth');
+
+//Roles
+
+Route::get('/roles',[RoleController::class,'index'])->middleware('auth');

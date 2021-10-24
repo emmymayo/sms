@@ -592,7 +592,22 @@ const SchoolTimetableViewer = {
             let day = new Date(date).toDateString();
             
             return day;
-        }
+        },
+        printTimetable(){
+            
+            var a = window.open('','','height=1024, width=786');
+            //get print area
+            a.document.write('<html>');
+            a.document.write(document.head.innerHTML);
+            a.document.write('<body>');
+            a.document.write(document.getElementById('printable').innerHTML);
+
+            a.document.write('</body>');
+            a.document.write('</html>');
+            a.document.close();
+            //give some time for dom to load
+            setTimeout(()=>{a.print()},2500);
+        },
          
     },
 

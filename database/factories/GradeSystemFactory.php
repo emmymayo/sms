@@ -22,7 +22,10 @@ class GradeSystemFactory extends Factory
     public function definition()
     {
         return [
-            //
+            'grade' => $this->faker->randomElement(['A','B']),
+            'remark' => $this->faker->randomElement(["Pass","Fail"]),
+            'from' => $this->faker->randomNumber(2),
+            'to' => $this->faker->randomNumber(2),
         ];
     }
 }

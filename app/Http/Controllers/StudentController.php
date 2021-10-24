@@ -32,6 +32,23 @@ class StudentController extends Controller
                 ]);
     }
 
+    public function getExamSectionStudents($exam_id,$section_id){
+        //retrieve subjects students in a section (section_id) registered
+        // during an exam (exam_id)
+        $students = Student::whereIn('id',
+                            function($query) use($exam_id,$section_id){
+                                $query->select('student_id')
+                                    ->from('marks')
+                                    ->where([
+                                        "exam_id"=>$exam_id,
+                                        "section_id" => $section_id
+                                    ])->get();
+                            }    
+                    )->get();
+
+        return response()->json($students);
+    }
+
     /**
      * Show the form for creating a new resource.
      *

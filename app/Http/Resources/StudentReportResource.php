@@ -4,6 +4,7 @@ namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 
+
 class StudentReportResource extends JsonResource
 {
     /**
@@ -14,6 +15,10 @@ class StudentReportResource extends JsonResource
      */
     public function toArray($request)
     {
-        return parent::toArray($request);
+        return array_merge(parent::toArray($request),[
+                'class_average' =>  $this->subjectStat()->average,
+                'subject_total' => $this->totalScore(),
+                'subject_position' => $this->subjectPosition(),
+        ]);
     }
 }

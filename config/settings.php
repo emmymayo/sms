@@ -19,24 +19,29 @@ return [
     ],
 
     'terms' => ['first','second','third'],
-    'cass' =>['cass1','cass2','tass'],
+
+    /* Select continuous assessment you would like to use between 
+    *  cass1, cass2, cass3, cass4, tass
+    *  CASS = Continuous ASsessment Score
+    *  TASS = Terminal ASSessment Score
+    */
+
+    'cass' =>['cass1','cass2','tass'], 
+    /*
+    * Define Maximum value for validating Assessment scores
+    *
+    */
     'cass1'=>['max'=>20],
     'cass2'=>['max'=>20],
-    'cass3'=>['max'=>0], //not used
-    'cass4'=>['max'=>0], //not used
+    'cass3'=>['max'=>0], 
+    'cass4'=>['max'=>0], 
     'tass' =>['max'=>60],
 
-    /*
-     *Define grade system for results
-     * 
-     */
-    'grades' => [
-        ['from'=> 70, 'to'=> 100,'remark'=> 'Excellent','grade' =>'A'],
-        ['from'=> 60, 'to'=> 69.9, 'remark' => 'V. Good','grade' => 'B'],
-        ['from'=> 50, 'to'=> 59.9, 'remark' => 'Good','grade' => 'C'],
-        ['from'=> 40, 'to'=> 49.9, 'remark' => 'Fair','grade' => 'D'],
-        ['from'=> 0, 'to'=> 39.9, 'remark' => 'Poor','grade' => 'F'],
-        
+    //Define roles that are not returned to UI
+    //roles are filtered using Model global scopes
+
+    'roles' => [
+        'exception' => ['super','others','support','parent','librarian','accountant'],
     ],
 
     /*
@@ -56,7 +61,14 @@ return [
         ['name'=> 'Honesty','value' => 5,'max' => 5, 'min' => 1],
         ['name'=> 'Teamwork','value' => 5,'max' => 5, 'min' => 1],
         ['name'=> 'Leadership','value' => 5,'max' => 5, 'min' => 1],
-    ] 
+    ],
+
+
+    //TEST
+    //set number of students to be created in Database Seeder
+    'seed' => [
+        'students' => 500
+    ]
 
 ];
 
