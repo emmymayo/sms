@@ -57,7 +57,7 @@
                         <div v-show="show_timetable" class="my-2" id="printable">
                             
                             <template v-if="timetable_type=='sections'">
-                            <table class="table table-striped  table-responsive">
+                            <table class="table table-hover  table-responsive-md">
                                 <tr>
                                     <th></th>
                                     <th class="text-center" v-for="(timeslot_list,timeslot_list_index) in timetable_timeslots" :key="timeslot_list_index">
@@ -79,7 +79,7 @@
                             </template>
 
                             <template v-if="timetable_type=='exams'">
-                            <table class="table table-striped table-bordered table-responsive">
+                            <table class="table table-hover table-bordered table-responsive-md">
                                 <tr>
                                     <th></th>
                                     <th class="text-center" v-for="(timeslot_list,timeslot_list_index) in timetable_timeslots" :key="timeslot_list_index">

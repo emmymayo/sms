@@ -15,7 +15,7 @@ class NoticeControllerTest extends TestCase
 
     public function test_notice_index()
     {
-        $this->setActor();
+        $this->setActor('admin');
        
         $response = $this->get('/notices');
 
@@ -71,7 +71,6 @@ class NoticeControllerTest extends TestCase
         ];
         $url = '/notices/'.$notice->id ;
         $response = $this->putJson($url,$data);
-        $response->dump();
         $response->assertCreated();
         $response->assertJson(['message'=> 'success']);
         $this->assertDatabaseHas('notices',$data);

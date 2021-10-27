@@ -31,7 +31,7 @@ class TimetableRecordControllerTest extends TestCase
         $user = $role->users()->first();
         $this->actingAs($user);
         $this->assertAuthenticated();
-        $timetable = \App\Models\Timetable::firstWhere('id','>',0);
+        $timetable = \App\Models\Timetable::factory()->create();
         $url = '/timetable-records?timetable_id='.$timetable->id;
         $response = $this->getJson($url);
         
@@ -47,7 +47,7 @@ class TimetableRecordControllerTest extends TestCase
         $user = $role->users()->first();
         $this->actingAs($user);
         $this->assertAuthenticated();
-        $timetable_record = \App\Models\TimetableRecord::firstWhere('id','>',0);
+        $timetable_record = \App\Models\TimetableRecord::factory()->create();
         $url = '/timetable-records/'.$timetable_record->id;
         $response = $this->getJson($url);
         
@@ -67,8 +67,8 @@ class TimetableRecordControllerTest extends TestCase
         $day = $this->faker->dayOfWeek();
         $entry = $this->faker->word();
         $response = $this->post($url,[
-            'timetable_id' => \App\Models\Timetable::firstWhere('id','>',0)->id,
-            'timeslot_id' => \App\Models\TimetableTimeslot::firstWhere('id','>',0)->id,
+            'timetable_id' => \App\Models\Timetable::factory()->create()->id,
+            'timeslot_id' => \App\Models\TimetableTimeslot::factory()->create()->id,
             'day' => $day,
             'entry' => $entry
         ]);
@@ -85,7 +85,7 @@ class TimetableRecordControllerTest extends TestCase
         $user = $role->users()->first();
         $this->actingAs($user);
         $this->assertAuthenticated();
-        $timetable_record = TimetableRecord::firstWhere('id','>',0);
+        $timetable_record = TimetableRecord::factory()->create();
         
         $url = '/timetable-records/'.$timetable_record->id;
         $day = $this->faker->dayOfWeek();

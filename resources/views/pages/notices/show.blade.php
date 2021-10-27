@@ -23,7 +23,8 @@
                            <ol class="breadcrumb float-sm-right">
                            <li class="breadcrumb-item"><a href="/">Home</a></li>
                            <li class="breadcrumb-item "><a href="/dashboard">Dashboard</a></li>
-                           <li class="breadcrumb-item active"><a href="/notices/{{$notice->id}}">Notice</a></li>
+                           <li class="breadcrumb-item active"><a href="/notices/list">Notices</a></li>
+                           <li class="breadcrumb-item active"><a href="/notices/{{$notice->id}}">{{$notice->title}}</a></li>
                            </ol>
                        </div><!-- /.col -->
                        </div><!-- /.row -->

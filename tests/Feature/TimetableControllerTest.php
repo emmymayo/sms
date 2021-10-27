@@ -55,7 +55,8 @@ class TimetableControllerTest extends TestCase
         $user = $role->users()->first();
         $this->actingAs($user);
         $this->assertAuthenticated();
-        $timetable = Timetable::firstWhere('id','>',0);
+        $timetable = Timetable::factory()->create();
+        
         $url = '/timetables/'.$timetable->id;
         $response = $this->getJson($url);
         
@@ -71,7 +72,6 @@ class TimetableControllerTest extends TestCase
         $user = $role->users()->first();
         $this->actingAs($user);
         $this->assertAuthenticated();
-        $timetable = Timetable::firstWhere('id','>',0);
 
         $url = '/timetables';
         $response = $this->post($url, [
@@ -94,7 +94,7 @@ class TimetableControllerTest extends TestCase
         $user = $role->users()->first();
         $this->actingAs($user);
         $this->assertAuthenticated();
-        $timetable = Timetable::firstWhere('id','>',0);
+        $timetable = Timetable::factory()->create();
 
         $name = $this->faker->name;
         $url = '/timetables/'.$timetable->id;

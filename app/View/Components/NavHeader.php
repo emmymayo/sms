@@ -4,6 +4,7 @@ namespace App\View\Components;
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\View\Component;
+use App\Models\User;
 
 class NavHeader extends Component
 {
@@ -15,7 +16,8 @@ class NavHeader extends Component
      */
     public function __construct()
     {
-        $this->notices = Auth::user()->role->notices;
+        
+        $this->notices = User::find(Auth::id())->role->notices;
     }
 
     /**

@@ -16,7 +16,7 @@ class SubjectSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('subjects')->delete();
+        
 
         Subject::factory()->count(5)->create();
     }

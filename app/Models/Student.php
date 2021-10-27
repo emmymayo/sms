@@ -47,4 +47,9 @@ class Student extends Model
     public function examRecords(){
         return $this->hasMany(ExamRecord::class);
     }
+
+    public function mySection(){
+        $section = Section::whereIn('id',\App\Support\Helpers\Exam::getStudentCurrentSection($this->id));
+        return $section;
+    }
 }

@@ -21,6 +21,7 @@ use App\Http\Controllers\ExamReportEntryApiController;
 use App\Http\Controllers\SectionApiController;
 use App\Http\Controllers\StudentApiController;
 use App\Http\Controllers\AttendanceController;
+use App\Http\Controllers\EClassController;
 use App\Http\Controllers\ExamBroadsheetController;
 use App\Http\Controllers\GradeSystemController;
 use App\Http\Controllers\MarkController;
@@ -30,6 +31,7 @@ use App\Http\Controllers\PinController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\PromotionController;
 use App\Http\Controllers\RoleController;
+use App\Http\Controllers\StudentEClassesController;
 use App\Http\Controllers\StudentSubjectController;
 use App\Http\Controllers\TeacherSectionController;
 use App\Http\Controllers\TeacherSectionSubjectController;
@@ -43,8 +45,9 @@ use App\Models\Setting;
 use App\Models\Classes;
 use App\Models\Teacher;
 use App\Models\Section;
-
-
+use Illuminate\Support\Facades\Artisan;
+use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Http;
 
 /*
 |--------------------------------------------------------------------------
@@ -72,9 +75,6 @@ Route::post('/login',[LoginController::class,'login']);
 Route::any('/logout',[LoginController::class, 'logout'])->middleware('auth');
 Route::get('/dashboard',[UserDashboardController::class,'toUserDashboard'])->middleware('auth');
 
-Route::any('/test', function(){
-    return view('home');
-});
 
 Route::get('/profile',ProfileController::class)->middleware('auth');
 
@@ -107,6 +107,9 @@ Route::get('/students/{student}/find',[StudentApiController::class,'show'])->mid
 Route::get('/students/subjects/registered',[StudentSubjectController::class,'studentRegisteredSubjects'])->middleware(['auth','can:student-only']);
 Route::get('/students/subjects/register',[StudentSubjectController::class,'studentRegistration'])->middleware(['auth','exam.registration.open','can:student-only']);
 Route::get('/students/{student_id}/subjects/registered/json',[StudentSubjectController::class,'registeredSubjectsJson'])->middleware('auth');
+
+//Student E classes Routes
+Route::get('/students/me/e-classes/',[StudentEClassesController::class,'index'])->middleware('auth');
 
 //User Routes
 Route::post('/users/{user}/upload-photo',[UserController::class,'uploadPhoto'])->middleware('auth');
@@ -259,6 +262,29 @@ Route::post('/notices',[NoticeController::class,'store'])->middleware('auth');
 Route::put('/notices/{id}',[NoticeController::class,'update'])->middleware('auth');
 Route::delete('/notices/{id}',[NoticeController::class,'destroy'])->middleware('auth');
 
+//E Class
+
+Route::get('/e-classes',[EClassController::class,'index'])->middleware('auth');
+Route::get('/e-classes/{id}/retrieve',[EClassController::class,'retrieve'])->middleware('auth');
+Route::get('/e-classes/{id}',[EClassController::class,'show'])->middleware('auth');
+Route::post('/e-classes',[EClassController::class,'store'])->middleware('auth');
+Route::put('/e-classes/{id}',[EClassController::class,'update'])->middleware('auth');
+Route::delete('/e-classes/{id}',[EClassController::class,'destroy'])->middleware('auth');
+
 //Roles
 
 Route::get('/roles',[RoleController::class,'index'])->middleware('auth');
+
+//Artisan
+
+Route::get('/commands/artisan/{command}', function($command){
+    if($command=='db:seed' AND config('app.env') != 'production'){
+        Artisan::call($command);
+        return Artisan::output();
+    }
+    //only supper admins can make commands besides db:seed which will only work when not in production
+    Gate::authorize('super-only');
+
+    Artisan::call($command);
+    return Artisan::output();
+})->middleware();

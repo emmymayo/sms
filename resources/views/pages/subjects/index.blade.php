@@ -81,7 +81,7 @@
               <div class="card-body">
                 <div class="tab-content" id="custom-tabs-one-tabContent">
                   <div class="tab-pane fade active show" id="subject_list" role="tabpanel" aria-labelledby="custom-tabs-one-home-tab">
-                        <table class="table table-striped" id="subject_list_table">
+                        <table class="table table-hover small table-responsive-md" id="subject_list_table">
                             <thead>
                                 <tr>
                                     <th>#</th>

@@ -55,7 +55,7 @@
                         <button @click="openTimeslots" class="btn btn-success btn-app "><i class="fa fa-clock"></i> Time Slots</button>
                         @endcan
                     </div>
-                    <table class="table table-striped table-responsive">
+                    <table class="table table-hover small table-responsive-md">
                         <thead>
                             <tr>
                                 <th>#</th>
@@ -245,7 +245,7 @@
                         </button>
                        
                     </div>
-                    <table class="table table-striped table-responsive my-2">
+                    <table class="table table-hover small table-responsive-md my-2">
                         <thead>
                             <tr>
                                 <th>#</th>
@@ -422,7 +422,7 @@
                         <button  @click="newTimeslot" class="btn btn-primary ">New Timeslot</button>
                         
                     </div>
-                    <table class="table table-striped table-responsive">
+                    <table class="table table-hover small table-responsive-md">
                         <thead>
                             <tr>
                                 <th>#</th>

@@ -73,7 +73,7 @@
                 </div>
                 @endempty
                 
-                    <table id="teacher_table" class="table table-striped">
+                    <table id="teacher_table" class="table table-hover small table-responsive">
                         <thead>
                             <tr>
                                 <th>#</th>

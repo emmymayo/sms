@@ -18,7 +18,7 @@ class GradeSystemControllerTest extends TestCase
      */
     public function test_gradesystem_index()
     {
-       $this->setActor();
+       $this->setActor('admin');
         
         $response = $this->get("/gradesystems");
 

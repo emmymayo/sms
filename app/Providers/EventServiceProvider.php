@@ -2,6 +2,12 @@
 
 namespace App\Providers;
 
+use App\Events\MeetingCreated;
+use App\Events\MeetingDeleted;
+use App\Events\MeetingUpdated;
+use App\Listeners\PersistCreatedMeeting;
+use App\Listeners\PersistUpdatedMeeting;
+use App\Listeners\RemoveDeletedMeetingFromDB;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
@@ -18,6 +24,15 @@ class EventServiceProvider extends ServiceProvider
         Registered::class => [
             SendEmailVerificationNotification::class,
         ],
+        MeetingCreated::class => [
+            PersistCreatedMeeting::class,
+        ],
+        MeetingUpdated::class => [
+            PersistUpdatedMeeting::class,
+        ],
+        MeetingDeleted::class => [
+            RemoveDeletedMeetingFromDB::class,
+        ]
     ];
 
     /**

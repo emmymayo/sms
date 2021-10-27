@@ -64,6 +64,12 @@
               <p>My Attendance</p>
             </a>
           </li>
+          <li class="nav-item">
+            <a href="/students/me/e-classes" class="nav-link">
+              <i class="nav-icon fas fa-chalkboard"></i>
+              <p>E-Classes</p>
+            </a>
+          </li>
           @endcan
           @can('admin-only')     
           <li class="nav-item  ">
@@ -159,6 +165,12 @@
           </li>
           @endcan
           @can('admin-and-teacher-only')
+          <li class="nav-item">
+            <a href="/e-classes" class="nav-link">
+              <i class="nav-icon fas fa-chalkboard"></i>
+              <p>Manage E-Classes</p>
+            </a>
+          </li>
           <li class="nav-item">
             <a href="#" class="nav-link">
               <i class="nav-icon fas fa-cog "></i>

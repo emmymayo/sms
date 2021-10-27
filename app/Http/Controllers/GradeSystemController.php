@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Gate;
 class GradeSystemController extends Controller
 {
     public function index(){
+        
         if(request()->expectsJson())
         {
             return $this->getGradeSystems();

@@ -74,7 +74,7 @@
 
                 
                 
-                    <table id="admin_table" class="table table-striped table-responsive">
+                    <table id="admin_table" class="table table-striped table-responsive-md">
                         <thead>
                             <tr>
                                 <th>#</th>

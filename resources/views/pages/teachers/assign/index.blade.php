@@ -42,7 +42,7 @@
              <!-- Vue Teachers Table -->
              <div v-show="show_teachers">   
              
-             <table id="" class="table table-striped" >
+             <table id="" class="table table-hover small table-responsive-md" >
                      <thead>
                          <tr>
                              <th>#</th>
@@ -103,7 +103,7 @@
                         </select>
                     </div>
                     
-                    <table  class="table table-striped">
+                    <table  class="table table-hover small table-responsive-md">
                         
                         <tr v-for="(section,index) in sections" :key="index">
                             <td><input type="checkbox"  
@@ -149,7 +149,7 @@
                         <button class="btn btn-primary" @click="loadSubjects(selected_teacher.id)">Load Subjects</button>
                     </div>
                     
-                    <table  class="table table-striped" v-show="show_subjects">
+                    <table  class="table table-hover small table-responsive-md" v-show="show_subjects">
                         
                         <tr v-for="(subject,index) in subjects" :key="index">
                             <td><input type="checkbox"  

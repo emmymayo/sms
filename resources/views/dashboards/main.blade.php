@@ -18,7 +18,7 @@
                 <div class="container-fluid">
                     <div class="row mb-2">
                     <div class="col-sm-6">
-                        <h1 class="m-0 lead">Dashboard</h1>
+                        <h1 class="m-0 lead">Dashboard </h1>
                     </div><!-- /.col -->
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
@@ -41,7 +41,10 @@
                         <div class="col-md-12 text-right mx-auto my-2   text-center">
                             
                             <span id="dashTime" class="font-weight-light h3 "></span>	<br>
-			                <span id="dashDate" class="font-weight-light h3 "></span>
+			                <span id="dashDate" class="font-weight-light h3 "></span> <br>
+                            @can('student-only')
+                            <span class="my-2 font-weight-bold h3 ">{{$my_section->classes->name.' '. $my_section->name}}</span>
+                            @endcan
                         </div>
                     </div>
                     @can('admin-only')

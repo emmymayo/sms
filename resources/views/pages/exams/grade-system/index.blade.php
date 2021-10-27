@@ -60,7 +60,7 @@
                     <div class="card-body">
                         <div class="tab-content" id="custom-tabs-one-tabContent">
                         <div class="tab-pane fade active show" id="grades_list" role="tabpanel" aria-labelledby="custom-tabs-one-home-tab">
-                                <table class="table table-striped table-responsive w-100" id="">
+                                <table class="table  table-responsive-md small " id="">
                                     <thead>
                                         <tr>
                                             <th>#</th>

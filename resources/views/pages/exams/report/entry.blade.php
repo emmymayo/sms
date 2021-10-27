@@ -73,7 +73,7 @@
                 <!-- Vue Table -->
                 <div v-show="show_entries">   
                 <button class="btn btn-success float-right" @click="bulkUpdate()"> <i class="fa fa-paper-plane"></i> Update</button>
-                <table id="" class="table table-striped table-responsive" >
+                <table id="" class="table table-hover small table-responsive-md" >
                         <thead>
                             <tr>
                                 <th>#</th>

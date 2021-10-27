@@ -28,6 +28,19 @@ class StudentSeeder extends Seeder
         //pick from first 3 sessions
         $sessions = Session::whereIn('id',[1,2,3])->get()->pluck('id');
         $sections = Section::where('id','>',0)->pluck('id');
+
+        //Create specific student 
+        $student = Student::factory()->for(User::factory()->create([
+            'email' => 'student@sms.com',
+            'role_id' => Role::firstWhere('name','student')->id
+        ]))->create();
+            //Assign each Student to section
+        StudentSectionSession::create([
+            'student_id' => $student->id,
+            'session_id' => collect($sessions)->random(1)[0], //randomize, pick one and get first index
+            'section_id' => collect($sections)->random(1)[0],
+
+        ]);
         for($i=0;$i<$count;$i++){
             $student = Student::factory()->for(User::factory()->create([
                 'role_id' => Role::firstWhere('name','student')->id

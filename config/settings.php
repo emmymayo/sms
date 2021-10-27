@@ -45,6 +45,17 @@ return [
     ],
 
     /*
+    |
+    |   Define E-Class credentials
+    |
+    */
+    'e-class' =>[
+        'zoom-api-key' => env('ZOOM_API_KEY'),
+        'zoom-api-secret' => env('ZOOM_API_SECRET'),
+        'max-class-duration' => 120, //Maximum duration in minutes for a class
+    ],
+
+    /*
      *Define behavioural assessment abilities
      * 
      */

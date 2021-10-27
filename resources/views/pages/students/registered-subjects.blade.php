@@ -36,7 +36,7 @@
                 <div class="container-fluid">
                 <div class="my-2 p-1">
 
-                    <table class="table table-striped  p-md-5">
+                    <table class="table table-hover small table-responsive-md  p-md-5">
                         <tr>
                             <th>#</th>
                             <th>Subject</th>

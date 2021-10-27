@@ -24,7 +24,7 @@ class SubjectFactory extends Factory
         $subjects = [
             'Mathematics', 'English Studies', 'Basic Science', 'Civic Education', 'Computer Studies'
         ];
-        $subject = $this->faker->randomeElement($subjects);
+        $subject = $this->faker->randomElement($subjects);
         return [
             'name' => $subject,
             'short_name' => substr($subject, 0,3),

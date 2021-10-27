@@ -27,7 +27,6 @@ class TimetableTimeslotControllerTest extends TestCase
         $this->assertAuthenticated();
         
         $response = $this->get('/timetable-timeslots');
-        $response->dump();
         $response->assertStatus(200);
         $response->assertViewIs('pages.timetables.timeslots.index');
         
@@ -57,7 +56,7 @@ class TimetableTimeslotControllerTest extends TestCase
         $user = $role->users()->first();
         $this->actingAs($user);
         $this->assertAuthenticated();
-        $timeslot = TimetableTimeslot::firstWhere('id','>',0);
+        $timeslot = TimetableTimeslot::factory()->create();
         $url = '/timetable-timeslots/'.$timeslot->id;
         $response = $this->getJson($url);
         
@@ -97,7 +96,7 @@ class TimetableTimeslotControllerTest extends TestCase
         $user = $role->users()->first();
         $this->actingAs($user);
         $this->assertAuthenticated();
-        $timeslot = TimetableTimeslot::firstWhere('id','>',0);
+        $timeslot = TimetableTimeslot::factory()->create();
        
         $name = $this->faker->name;
         $url = '/timetable-timeslots/'.$timeslot->id;
@@ -145,12 +144,11 @@ class TimetableTimeslotControllerTest extends TestCase
         $user = $role->users()->first();
         $this->actingAs($user);
         $this->assertAuthenticated();
-        $timetable = Timetable::firstWhere('id','>',0);
+        $timetable = Timetable::factory()->create();
         $url = '/timetable-timeslots/timetables/'.$timetable->id;
         $response = $this->get($url);
 
         $response->assertSuccessful();
-        $response->dump();
 
 
     }

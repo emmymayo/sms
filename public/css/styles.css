@@ -3107,7 +3107,7 @@ input[type=button].btn-block {
   margin-right: 0.125rem;
 }
 .dropleft .dropdown-toggle::after {
-  word
+  
   display: inline-block;
   margin-left: 0.255em;
   vertical-align: 0.255em;
@@ -4327,6 +4327,7 @@ input[type=button].btn-block {
   display: flex;
   flex-direction: column;
   min-width: 0;
+  
   word-wrap: break-word;
   background-color: #fff;
   background-clip: border-box;

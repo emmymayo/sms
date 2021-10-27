@@ -92,7 +92,7 @@
 
                     </div> 
                 
-                <table id="" class="table table-striped table-responsive" >
+                <table id="" class="table table-hover small table-responsive-md" >
                         <thead>
                             <tr>
                                 <th>#</th>

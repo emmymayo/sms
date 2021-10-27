@@ -47,8 +47,13 @@ class TimetableController extends Controller
                                                 'scheduleable_type'=>'sections',
                                                 'scheduleable_id'=> $data['section_id']
                                                 ]);
-                                        })->latest()
-                                        ->get()
+                                        })
+                                    ->latest()
+                                    ->when(request()->has('page'), 
+                                            function(Builder $query){
+                                                $query->paginate(30);
+                                            }
+                                    )->get()
 
                                         : Timetable::query()
                                         ->with(['scheduleable'])

@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Section;
 use App\Models\Setting;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
+use App\Support\Helpers\Exam;
 
 class UserDashboardController extends Controller
 {
@@ -19,7 +21,11 @@ class UserDashboardController extends Controller
             return view('dashboards.main');
         }
         elseif(User::find(Auth::id())->isStudent()){
-            return view('dashboards.main');
+            $student_id = User::find(auth()->id())->student->id;
+            
+            $section = Exam::getStudentCurrentSection($student_id);
+            
+            return view('dashboards.main', ['my_section'=> $section]);
         }
     }
 

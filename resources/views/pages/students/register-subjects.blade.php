@@ -47,7 +47,7 @@
                 <div>
                     Total Subjects Registered: @{{registered_subjects.length}}
                 </div>
-                <table id="" class="table table-striped" >
+                <table id="" class="table table-hover small table-responsive-md" >
                         <thead>
                             <tr>
                                 <th>#</th>

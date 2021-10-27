@@ -60,7 +60,7 @@
                        <div class="card-body">
                            <div class="tab-content" id="custom-tabs-one-tabContent">
                            <div class="tab-pane fade active show" id="notices_list" role="tabpanel" aria-labelledby="custom-tabs-one-home-tab">
-                                   <table class="table table-striped table-responsive " id="">
+                                   <table class="table table-hover small table-responsive-md " id="">
                                        <thead>
                                            <tr>
                                                <th>#</th>

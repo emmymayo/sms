@@ -20,27 +20,29 @@
           <i class="far fa-comments"></i>
           <span class="badge badge-danger navbar-badge">{{count($notices)==0?'':count($notices)}}</span>
         </a>
-        <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right ">
+        <div class="dropdown-menu dropdown-menu-md dropdown-menu-right " style="max-width:auto;height:auto">
           
           
           @foreach ($notices as $notice)
             
-          <a href="/notices/{{$notice->id}}" class="dropdown-item" style="word-wrap:break-word">
+          
             <!-- Message Start -->
-            <div class="media " >
+            <div class="media  " >
+            <a href="/notices/{{$notice->id}}" class="dropdown-item" style="word-wrap:break-word">
               <!-- <img src="../../dist/img/user1-128x128.jpg" alt="User Avatar" class="img-size-50 mr-3 img-circle"> -->
               <div class="media-body ">
                 <div class="h6 small font-weight-bold " >
                   {{$notice->title}}
                   <!-- <span class="float-right text-sm text-primary"><i class="fas fa-star"></i></span> -->
                 </div>
-                <p class="text-sm small ">{{substr($notice->message, 0,30).'...'}}</p>
+                <p class="text-sm small ">{{substr($notice->message, 0,40).'...'}}</p>
                 <!-- <p class="text-sm text-muted"><i class="far fa-clock mr-1"></i> </p> -->
               </div>
+              </a>
             </div>
             <!-- Message End -->
-            </a>
-         
+           
+            <div class="dropdown-divider"></div>
           @endforeach
          
           

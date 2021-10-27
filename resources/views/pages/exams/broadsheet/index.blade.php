@@ -102,7 +102,7 @@
                                 @{{termText(broadsheet_exam.term)+' term'}} @{{broadsheet_exam.session.start+'/'+broadsheet_exam.session.end+' session'}}
                                 </h3>
                             </div>
-                            <table class="table table-bordered ">
+                            <table class="table table-bordered  ">
                                 <thead>
                                 <tr class="" >
                                     <!-- List subjects in first row -->
