@@ -21,6 +21,11 @@ use App\Http\Controllers\ExamReportEntryApiController;
 use App\Http\Controllers\SectionApiController;
 use App\Http\Controllers\StudentApiController;
 use App\Http\Controllers\AttendanceController;
+use App\Http\Controllers\CbtAnswerController;
+use App\Http\Controllers\CbtController;
+use App\Http\Controllers\CbtQuestionController;
+use App\Http\Controllers\CbtResultController;
+use App\Http\Controllers\CbtSectionController;
 use App\Http\Controllers\EClassController;
 use App\Http\Controllers\ExamBroadsheetController;
 use App\Http\Controllers\GradeSystemController;
@@ -31,6 +36,8 @@ use App\Http\Controllers\PinController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\PromotionController;
 use App\Http\Controllers\RoleController;
+use App\Http\Controllers\StudentCbtController;
+use App\Http\Controllers\StudentCbtResultController;
 use App\Http\Controllers\StudentEClassesController;
 use App\Http\Controllers\StudentSubjectController;
 use App\Http\Controllers\TeacherSectionController;
@@ -65,11 +72,19 @@ Route::get('/', function () {
 })->name('home');
 
 //Authentication Routes
+Route::get('/csrf-token/json',function(){
+    request()->session()->regenerateToken();
+    return response()->json();
+})->middleware('auth');
 Route::get('/login', function (){
     return view('login',[
                 'schools' => Config::get('settings.schools'), 
                 ]);
 })->middleware('guest')->name('login');
+
+Route::get('/configs', function(){
+    return Config::get(request('config_key'));
+})->middleware('auth');
 
 Route::post('/login',[LoginController::class,'login']);
 Route::any('/logout',[LoginController::class, 'logout'])->middleware('auth');
@@ -274,6 +289,48 @@ Route::delete('/e-classes/{id}',[EClassController::class,'destroy'])->middleware
 //Roles
 
 Route::get('/roles',[RoleController::class,'index'])->middleware('auth');
+
+//CBT Routes
+Route::get('/cbts',[CbtController::class, 'index'])->middleware('auth');
+Route::get('/cbts/{id}',[CbtController::class, 'show'])->middleware('auth');
+Route::post('/cbts',[CbtController::class, 'store'])->middleware('auth');
+Route::put('/cbts/{id}',[CbtController::class, 'update'])->middleware('auth');
+Route::delete('/cbts/{id}',[CbtController::class, 'destroy'])->middleware('auth');
+
+//CBT questions routes
+Route::get('cbt-questions',[CbtQuestionController::class,'index'])->middleware('auth');
+Route::get('/cbt-questions/{id}',[CbtQuestionController::class,'show'])->middleware('auth');
+Route::post('/cbt-questions',[CbtQuestionController::class,'store'])->middleware('auth');
+Route::put('/cbt-questions/{id}',[CbtQuestionController::class,'update'])->middleware('auth');
+Route::delete('/cbt-questions/{id}',[CbtQuestionController::class,'destroy'])->middleware('auth');
+Route::patch('/cbt-questions/{id}/image',[CbtQuestionController::class,'uploadImage'])->middleware('auth');
+
+//CBT answers routes
+Route::get('cbt-answers',[CbtAnswerController::class,'index'])->middleware('auth');
+Route::get('/cbt-answers/{id}',[CbtAnswerController::class,'show'])->middleware('auth');
+Route::post('/cbt-answers',[CbtAnswerController::class,'store'])->middleware('auth');
+Route::put('/cbt-answers/{id}',[CbtAnswerController::class,'update'])->middleware('auth');
+Route::delete('/cbt-answers/{id}',[CbtAnswerController::class,'destroy'])->middleware('auth');
+
+
+//CBT result routes
+Route::get('/cbt-results',[CbtResultController::class,'index'])->middleware('auth');
+Route::get('/cbt-results/{id}',[CbtResultController::class,'show'])->middleware('auth');
+Route::post('/cbt-results',[CbtResultController::class,'store'])->middleware('auth');
+Route::put('/cbt-results/{id}',[CbtResultController::class,'update'])->middleware('auth');
+Route::delete('/cbt-results/{id}',[CbtResultController::class,'destroy'])->middleware('auth');
+
+//CBT Sections
+Route::get('/cbt-sections',[CbtSectionController::class,'index'])->middleware('auth');
+Route::put('/cbt-sections/toggle',[CbtSectionController::class,'toggle'])->middleware('auth');
+
+// Student CBT 
+Route::get('/student-cbts',[StudentCbtController::class, 'index'])->middleware('auth');
+
+// Student cbt result
+Route::get('/student-cbt-results',[StudentCbtResultController::class,'index'])->middleware('auth');
+Route::get('/student-cbt-results/calculate',[StudentCbtResultController::class,'calculateResult'])->middleware('auth');
+Route::patch('/student-cbt-results',[StudentCbtResultController::class,'update'])->middleware('auth');
 
 //Artisan
 

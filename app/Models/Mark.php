@@ -10,6 +10,7 @@ use App\Models\Exam;
 use App\Models\Section;
 use Illuminate\Support\Facades\DB;
 use App\Support\Helpers\Exam as ExamHelper;
+use Illuminate\Validation\ValidationException;
 
 class Mark extends Model
 {
@@ -97,5 +98,62 @@ class Mark extends Model
    }
    public function getTassAttribute($value){
        return $value+0;
+   }
+   public function setCass1Attribute($value){
+       if($value > static::maxCassValue('cass1')){
+           throw ValidationException::withMessages(['cass1' => 'value exceeds maximum expected value']);
+       }
+       $this->attributes['cass1'] = $value;
+   }
+   public function setCass2Attribute($value){
+        if($value > static::maxCassValue('cass2')){
+            throw ValidationException::withMessages(['cass2' => 'value exceeds maximum expected value']);
+        }
+        $this->attributes['cass2'] = $value;
+   }
+   public function setCass3Attribute($value){
+        if($value > static::maxCassValue('cass3')){
+            throw ValidationException::withMessages(['cass3' => 'value exceeds maximum expected value']);
+        }
+        $this->attributes['cass3'] = $value;
+   }
+   public function setCass4Attribute($value){
+        if($value > static::maxCassValue('cass4')){
+            throw ValidationException::withMessages(['cass4' => 'value exceeds maximum expected value']);
+        }
+        $this->attributes['cass4'] = $value;
+   }
+   public function setTassAttribute($value){
+        if($value > static::maxCassValue('tass')){
+            throw ValidationException::withMessages(['tass' => 'value exceeds maximum expected value']);
+        }
+        $this->attributes['tass'] = $value;
+   }
+
+   public static function maxCassValue(string $value = 'cass1'){
+        $max_value = null;
+        switch ($value) {
+            case 'cass1':
+                $max_value = config('settings.cass1.max');
+                break;
+            case 'cass2':
+                $max_value = config('settings.cass2.max');
+                break;
+            case 'cass3':
+                $max_value = config('settings.cass3.max');
+                break;
+            case 'cass4':
+                $max_value = config('settings.cass4.max');
+                break;
+            case 'tass':
+                $max_value = config('settings.tass.max');
+                break;
+            
+            default:
+                break;
+        }
+
+        return $max_value;
+    
    }
 }

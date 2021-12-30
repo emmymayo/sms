@@ -24,7 +24,7 @@ class CreateEClassesTable extends Migration
             $table->text('start_url');
             $table->text('join_url');
             $table->string('password');
-            $table->dateTimeTz('start_time');
+            $table->string('start_time');
             $table->timestamps();
         });
     }

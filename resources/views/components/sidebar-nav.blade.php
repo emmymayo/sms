@@ -70,6 +70,12 @@
               <p>E-Classes</p>
             </a>
           </li>
+          <li class="nav-item">
+            <a href="/student-cbts" class="nav-link">
+              <i class="nav-icon fas fa-chalkboard-teacher"></i>
+              <p>My CBTs</p>
+            </a>
+          </li>
           @endcan
           @can('admin-only')     
           <li class="nav-item  ">
@@ -165,6 +171,12 @@
           </li>
           @endcan
           @can('admin-and-teacher-only')
+          <li class="nav-item">
+            <a href="/cbts" class="nav-link">
+              <i class="nav-icon fas fa-chalkboard-teacher"></i>
+              <p>Manage CBTs</p>
+            </a>
+          </li>
           <li class="nav-item">
             <a href="/e-classes" class="nav-link">
               <i class="nav-icon fas fa-chalkboard"></i>
