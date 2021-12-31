@@ -15,7 +15,6 @@ use App\Http\Controllers\ExamRegistrationController;
 use App\Http\Controllers\ExamReportCheckerController;
 use App\Http\Controllers\ExamReportEntryController;
 use App\Http\Controllers\SubjectController;
-use App\Http\Controllers\ClassApiController;
 use App\Http\Controllers\ExamRegistrationApiController;
 use App\Http\Controllers\ExamReportEntryApiController;
 use App\Http\Controllers\SectionApiController;
@@ -48,13 +47,8 @@ use App\Http\Controllers\TimetableTimeslotController;
 use App\Http\Controllers\TimetableViewController;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Route;
-use App\Models\Setting;
-use App\Models\Classes;
-use App\Models\Teacher;
-use App\Models\Section;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Gate;
-use Illuminate\Support\Facades\Http;
 
 /*
 |--------------------------------------------------------------------------
@@ -88,7 +82,7 @@ Route::get('/configs', function(){
 
 Route::post('/login',[LoginController::class,'login']);
 Route::any('/logout',[LoginController::class, 'logout'])->middleware('auth');
-Route::get('/dashboard',[UserDashboardController::class,'toUserDashboard'])->middleware('auth');
+Route::get('/dashboard',[UserDashboardController::class,'toUserDashboard'])->middleware('auth')->name('dashboard');
 
 
 Route::get('/profile',ProfileController::class)->middleware('auth');
@@ -295,6 +289,7 @@ Route::get('/cbts',[CbtController::class, 'index'])->middleware('auth');
 Route::get('/cbts/{id}',[CbtController::class, 'show'])->middleware('auth');
 Route::post('/cbts',[CbtController::class, 'store'])->middleware('auth');
 Route::put('/cbts/{id}',[CbtController::class, 'update'])->middleware('auth');
+Route::put('/cbts/{id}/reset',[CbtController::class, 'reset'])->middleware('auth');
 Route::delete('/cbts/{id}',[CbtController::class, 'destroy'])->middleware('auth');
 
 //CBT questions routes
@@ -319,6 +314,7 @@ Route::get('/cbt-results/{id}',[CbtResultController::class,'show'])->middleware(
 Route::post('/cbt-results',[CbtResultController::class,'store'])->middleware('auth');
 Route::put('/cbt-results/{id}',[CbtResultController::class,'update'])->middleware('auth');
 Route::delete('/cbt-results/{id}',[CbtResultController::class,'destroy'])->middleware('auth');
+Route::get('/cbt-results/cbts/sections',[CbtResultController::class,'getCbtSectionStudent'])->middleware('auth');
 
 //CBT Sections
 Route::get('/cbt-sections',[CbtSectionController::class,'index'])->middleware('auth');

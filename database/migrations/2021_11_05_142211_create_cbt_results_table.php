@@ -17,8 +17,8 @@ class CreateCbtResultsTable extends Migration
             $table->id();
             $table->foreignId('student_id')->constrained();
             $table->foreignId('section_id')->constrained();
-            $table->foreignId('cbt_id')->constrained();
-            $table->foreignId('cbt_question_id')->constrained();
+            $table->foreignId('cbt_id')->constrained()->onDelete('cascade');
+            $table->foreignId('cbt_question_id')->constrained()->onDelete('cascade');
             $table->text('answer')->nullable();
             $table->integer('seconds_left')->nullable();
             $table->timestamps();

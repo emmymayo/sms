@@ -172,10 +172,25 @@
           @endcan
           @can('admin-and-teacher-only')
           <li class="nav-item">
-            <a href="/cbts" class="nav-link">
+            <a href="#" class="nav-link">
               <i class="nav-icon fas fa-chalkboard-teacher"></i>
-              <p>Manage CBTs</p>
+              <p>CBTs</p>
+              <i class="right fas fa-angle-left"></i>
             </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="/cbts" class="nav-link">
+                  <i class="nav-icon fas fa-circle"></i>
+                  <p>Manage CBTs</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="/cbt-results" class="nav-link">
+                  <i class="nav-icon fas fa-circle"></i>
+                  <p>CBT Results</p>
+                </a>
+              </li>
+            </ul>
           </li>
           <li class="nav-item">
             <a href="/e-classes" class="nav-link">

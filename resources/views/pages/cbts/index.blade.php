@@ -102,6 +102,7 @@
                                                         <button @click="viewCbt(cbt.id)" class="dropdown-item"><i class="fa fa-eye"></i> View</button>
                                                         <button @click="assignSections(cbt.id)" class="dropdown-item"><i class="fas fa-school"></i> Assign Sections</button>
                                                         <button @click="editCbt(cbt.id)" class="dropdown-item"><i class="fa fa-edit"></i> Edit</button>
+                                                        <button @click="resetCbt(cbt.id)" class="dropdown-item"><i class="fa fa-sync"></i> Reset</button>
                                                        
                                                         <button @click="deleteCbt(cbt.id)" class="dropdown-item text-danger"><i class="fa fa-trash"></i> Delete</button>
                                                        

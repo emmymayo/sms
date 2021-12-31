@@ -15,7 +15,7 @@ class CreateCbtAnswersTable extends Migration
     {
         Schema::create('cbt_answers', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('cbt_question_id')->constrained();
+            $table->foreignId('cbt_question_id')->constrained()->onDelete('cascade');
             $table->text('value');
             $table->boolean('correct')->default(false);
             $table->timestamps();

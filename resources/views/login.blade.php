@@ -19,7 +19,7 @@
             <form action="/login" method="post">
             @csrf
                 <div class="input-group my-4">
-                <input type="email" class="form-control" name="email" placeholder="Email">
+                <input type="text" class="form-control" name="username" placeholder="Email or Admission No">
                 <div class="input-group-append">
                     <div class="input-group-text">
                     <span class="fas fa-envelope"></span>
@@ -34,15 +34,7 @@
                     </div>
                 </div>
                 </div>
-                <div class="form-group">
-                    <label class="small my-2" for="selectSchool">Select School</label>
-                    <select class="form-control" name="school" id="selectSchool" required>
-                     
-                        @foreach (config('settings.schools') as $school)
-                            <option value="{{$school['db']}}"> {{$school['name']}}</option>
-                        @endforeach
-                    </select>
-                </div>
+                
                 <div class="row">
                 @if(false)
                 <div class="col-8">

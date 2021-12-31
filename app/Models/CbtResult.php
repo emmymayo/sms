@@ -10,6 +10,7 @@ class CbtResult extends Model
     use HasFactory;
 
     protected $guarded = ['id'];
+    protected $with = ['cbtQuestion'];
 
     public function cbt(){
         return $this->belongsTo(Cbt::class);

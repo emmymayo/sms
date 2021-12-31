@@ -11,6 +11,11 @@ async function bootstrapStudentCbtApp(){
     Vue.createApp(StudentCbtModule.StudentCbtApp)
         .mount("#student-cbt-app");
 }
+async function bootstrapCbtResultApp(){
+    const CbtResultModule = await import("./modules/cbt/results/index.js");
+    Vue.createApp(CbtResultModule.CbtResultApp)
+        .mount("#cbt-result-app");
+}
 
 if(document.querySelector("#cbt-app")){
     bootstrapCbtApp();
@@ -18,5 +23,9 @@ if(document.querySelector("#cbt-app")){
 
 if(document.querySelector("#student-cbt-app")){
     bootstrapStudentCbtApp();
+}
+
+if(document.querySelector("#cbt-result-app")){
+    bootstrapCbtResultApp();
 }
 

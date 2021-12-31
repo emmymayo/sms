@@ -35,6 +35,8 @@ export default{
                 }
                 this.show_sections = true;
                 toastr.clear();
+                toastr.success('Done');
+                
                 
             }catch(error){
                 toastr.clear();

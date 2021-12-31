@@ -196,9 +196,21 @@ export const CbtApp = {
           }
 
           let response = await this.deleteRequests('/cbts/'+id);
-          console.log(response);
-          if(response.status==200){
+      
+          if(response.data.message=='success'){
             toastr.success('CBT removed successfully');
+            this.fetchCbtPage(this.cbt_page);
+          }
+        },
+        async resetCbt(id){
+          if(!confirm('This will clear all student cbt entries. Proceed?')){
+            return;
+          }
+
+          let response = await this.putRequests('/cbts/'+id+'/reset');
+        
+          if(response.data.message=='success'){
+            toastr.success('CBT reset successful');
             this.fetchCbtPage(this.cbt_page);
           }
         }

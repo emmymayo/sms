@@ -92,7 +92,7 @@
                         <div v-show="viewManager.get('take-test')" class="">
                             <!-- <button class="btn btn-default" @click="toggleView('home');test_component=''">Back</button> -->
                             <component :is="test_component" :cbt="test_cbt" @finished="finishTest" 
-                                :questions="test_questions">
+                                :cbt_questions="test_questions">
                             </component>
                         </div>
 

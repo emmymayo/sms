@@ -15,7 +15,7 @@ class CreateCbtQuestionsTable extends Migration
     {
         Schema::create('cbt_questions', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('cbt_id')->constrained();
+            $table->foreignId('cbt_id')->constrained()->onDelete('cascade');
             $table->text('question');
             $table->mediumText('instruction')->nullable();
             $table->smallInteger('marks')->default(1);

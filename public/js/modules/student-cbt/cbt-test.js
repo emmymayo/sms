@@ -1,10 +1,12 @@
 
+
 export default{
     
-    props:['cbt','questions'],
+    props:['cbt','cbt_questions'],
     emits:['finished'],
     data(){
         return {
+            questions:[],
             initializing:true,
             show_test:false,
             started:false,
@@ -164,6 +166,10 @@ export default{
             this.current_question=index;
             await this.updateAnswer(index,null,this.seconds_left);
         },
+        async bonusButton(){
+            toastr.info('Proceed');
+            await this.updateAnswer(index,null,this.seconds_left);
+        },
         async updateAnswer(question_index, option_id = null, seconds_left=''){
             if(this.test_ended){
                 return;
@@ -228,11 +234,20 @@ export default{
                 default:
                     break;
             }
+        },
+        shuffle(){
+            let unshuffled = JSON.parse(JSON.stringify(this.cbt_questions));
+            console.log(unshuffled);
+            this.questions = unshuffled
+            .map((value) => ({ value, sort: Math.random() }))
+            .sort((a, b) => a.sort - b.sort)
+            .map(({ value }) => value)
         }
+        
 
     },
     created(){
-         
+         this.shuffle();
          this.init();
 
     },
@@ -283,7 +298,10 @@ export default{
             <div id="question_panel" class="mx-1 mx-md-3">
                 <p class="my-1" id="current_question_instruction">Instruction: {{questions[current_question].instruction}}<p>
                 <p class="" id="current_question"><span class="font-weight-bold">Question{{current_question+1}}. 
-                    </span>{{questions[current_question].question}}
+                    </span>{{questions[current_question].question}} 
+                    (<span class="small">
+                        {{questions[current_question].marks}} mark<span v-if="questions[current_question].marks>1">s</span>
+                    </span>)
                 <p>
 
                 <div id="question_options" class="pl-3 mt-2">
@@ -296,7 +314,7 @@ export default{
                     </p>
                     <p v-if="questions[current_question].answers.length==0">
                         No Option? 
-                        <button v-if="current_question>0" @click="bonusButton" class="btn btn-default">Click here</button>
+                        <button  @click="bonusButton" class="btn btn-warning">Click here</button>
                        
                     </p>
                 </div>

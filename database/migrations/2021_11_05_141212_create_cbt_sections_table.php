@@ -15,7 +15,7 @@ class CreateCbtSectionsTable extends Migration
     {
         Schema::create('cbt_sections', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('cbt_id')->constrained();
+            $table->foreignId('cbt_id')->constrained()->onDelete('cascade');
             $table->foreignId('section_id')->constrained();
             $table->timestamps();
         });

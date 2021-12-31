@@ -2,50 +2,51 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Student;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 use App\Services\MultiDatabaseHandler;
 use App\Models\User;
+use Illuminate\Support\Facades\Hash;
 
 class LoginController extends Controller
 {
     public function login(Request $request){
 
-        
-        try {
-            $mdbHandler = new MultiDatabaseHandler();
-            $mdbHandler->setWorkingDatabase($request->school);
             if(Auth::attempt([
-                'email' => $request->email,
-                'password' => $request->password,
-                'status' => '1',
-            ],$request->remember))
-                {
-                    $request->session()->regenerate() ;
-                    $mdbHandler->setWorkingDatabase($request->school);
-                    echo session('working_db');
-                    echo config('database.connections.mysql.database');
-                    return redirect('dashboard');
-                    
+                    'email' => $request->username,
+                    'password' => $request->password,
+                    'status' => '1',
+                ],$request->remember))
+            {
+                $request->session()->regenerate() ;
+                
+                return redirect('dashboard');
+                
+            }else{
+                $user = User::firstWhere('id',Student::firstWhere('admin_no',$request->username)->pluck('user_id') )
+                            ->makeVisible(['password']);
+                if($user){
+                    // Verify student password
+                    if(Hash::check($request->password,$user->password)){
+                        Auth::loginUsingId($user->id);
+                        $request->session()->regenerate();
+                
+                        return redirect('dashboard');
+                    } 
                 }
-        } catch (\Throwable $th) {
-            //throw $th;
-            return back()->withErrors(['error'=>'Wrong School']);
-        }
-        
-
-            return back()->withErrors(['error'=>'Credentials do no match or wrong school selected.']);
+            }
+      
+            return back()->withErrors(['error'=>'Credentials do no match our records.']);
 
     }
 
-    public function logout(Request $request, MultiDatabaseHandler $mdbHandler){
+    public function logout(Request $request){
         Auth::logout();
         $request->session()->invalidate();
         $request->session()->regenerateToken();
-        $mdbHandler->clearWorkingDatabase();
-
-        return redirect('/');
+        return redirect()->route('home');
 
     }
 }

@@ -2,7 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Cbt;
 use App\Models\CbtResult;
+use App\Models\Mark;
+use App\Models\Student;
+use App\Models\StudentSectionSession;
+use App\Support\Helpers\SchoolSetting;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 
@@ -15,7 +20,7 @@ class CbtResultController extends Controller
             $cbt_results = $this->getCbtResults();
             return response()->json($cbt_results);
         }
-        return ;
+        return view('pages.cbts.results.index');
     }
 
     public function show($id)
@@ -77,6 +82,33 @@ class CbtResultController extends Controller
         if(request()->expectsJson()){
             return response()->json(['message' => 'success']);
         }
+    }
+
+    public function getCbtSectionStudent(){
+        request()->validate([
+            'section_id' => 'required|exists:sections,id',
+            'cbt_id' => 'required|exists:cbts,id',
+        ]);
+        $students_query = Student::query()
+            ->whereIn('id', function($query){
+                // get student in provided section (cbt_section)
+                $query->select('student_id')
+                    ->from('students_sections_sessions')
+                    ->where('section_id',request('section_id'))
+                    ->where('session_id', SchoolSetting::getSchoolSetting('current.session'));
+            })
+            ->whereIn('id', function($query){
+                // Get student that registered for the subject provided by the given cbt
+                $query->select('student_id')
+                    ->from('marks')
+                    ->where('exam_id',SchoolSetting::getSchoolSetting('active.exam'))
+                    ->where('section_id',request('section_id'))
+                    ->where('subject_id',Cbt::find(request('cbt_id'))->subject_id);
+            });
+
+       $students = request()->has('page')? $students_query->paginate() : $students_query->get();
+
+       return response()->json($students);
     }
 
 
