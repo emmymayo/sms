@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Auth;
 
 use App\Services\MultiDatabaseHandler;
 use App\Models\User;
+use App\Support\Helpers\Exam;
 use Illuminate\Support\Facades\Hash;
 
 class LoginController extends Controller
@@ -21,7 +22,9 @@ class LoginController extends Controller
                 ],$request->remember))
             {
                 $request->session()->regenerate() ;
-                
+                if(!$this->isStudentRegisteredForCurrentSession()){
+                    return redirect()->route('logout');
+                }
                 return redirect('dashboard');
                 
             }else{
@@ -32,7 +35,7 @@ class LoginController extends Controller
                     if(Hash::check($request->password,$user->password)){
                         Auth::loginUsingId($user->id);
                         $request->session()->regenerate();
-                
+                        $this->checkIfStudentRegisteredForCurrentSession();
                         return redirect('dashboard');
                     } 
                 }
@@ -46,7 +49,24 @@ class LoginController extends Controller
         Auth::logout();
         $request->session()->invalidate();
         $request->session()->regenerateToken();
-        return redirect()->route('home');
+        return redirect()->route('login');
 
+    }
+
+    public function isStudentRegisteredForCurrentSession(){
+        // Check if student is registered for current session else logout
+        if(Auth::user() && User::find(Auth::id())->isStudent()){
+            $student_id = User::find(auth()->id())->student->id;
+            
+            $section = Exam::getStudentCurrentSection($student_id) ;
+            
+            // abort when the student hasnt been registered, promoted or has no section is for this session
+            if(empty($section)){
+                
+               return false;
+            }
+             
+        }
+        return true;
     }
 }
