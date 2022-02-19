@@ -328,6 +328,12 @@ Route::get('/student-cbt-results',[StudentCbtResultController::class,'index'])->
 Route::get('/student-cbt-results/calculate',[StudentCbtResultController::class,'calculateResult'])->middleware('auth');
 Route::patch('/student-cbt-results',[StudentCbtResultController::class,'update'])->middleware('auth');
 
+
+// Product Routes
+
+
+
+
 //Artisan
 
 Route::get('/commands/artisan/{command}', function($command){

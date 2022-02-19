@@ -16,7 +16,7 @@
 			        transform:rotate(-90deg);  	
                 }
     </style>
-    <title>Document</title>
+    <title>{{$record->student->user->name}}</title>
 </head>
 <body>
 

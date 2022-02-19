@@ -63,6 +63,10 @@ class User extends Authenticatable
         return $this->hasOne(Admin::class);
     }
 
+    public function orders(){
+        return $this->hasMany(Order::class);
+    }
+
     public function isAdmin(){
         return Role::find($this->role_id)->name == 'admin'? true : false;
     }

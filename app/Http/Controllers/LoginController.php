@@ -15,33 +15,35 @@ class LoginController extends Controller
 {
     public function login(Request $request){
 
-            if(Auth::attempt([
-                    'email' => $request->username,
-                    'password' => $request->password,
-                    'status' => '1',
-                ],$request->remember))
-            {
-                $request->session()->regenerate() ;
-                if(!$this->isStudentRegisteredForCurrentSession()){
-                    return redirect()->route('logout');
-                }
-                return redirect('dashboard');
-                
-            }else{
-                $user = User::firstWhere('id',Student::firstWhere('admin_no',$request->username)->pluck('user_id') )
-                            ->makeVisible(['password']);
-                if($user){
-                    // Verify student password
-                    if(Hash::check($request->password,$user->password)){
-                        Auth::loginUsingId($user->id);
-                        $request->session()->regenerate();
-                        $this->checkIfStudentRegisteredForCurrentSession();
-                        return redirect('dashboard');
-                    } 
-                }
+    
+        if(Auth::attempt([
+                'email' => $request->username,
+                'password' => $request->password,
+                'status' => 1,
+            ],$request->remember))
+        {
+            $request->session()->regenerate() ;
+            if(!$this->isStudentRegisteredForCurrentSession()){
+                return redirect()->route('logout');
             }
-      
-            return back()->withErrors(['error'=>'Credentials do no match our records.']);
+            return redirect('dashboard');
+            
+        }else{
+            $user = User::firstWhere('id',Student::select('user_id')->firstWhere('admin_no',$request->username) );
+                        
+            if($user && $user->status == 1){
+                // Verify student password
+                $user = $user->makeVisible(['password']);
+                if(Hash::check($request->password,$user->password)){
+                    Auth::loginUsingId($user->id);
+                    $request->session()->regenerate();
+                    $this->checkIfStudentRegisteredForCurrentSession();
+                    return redirect('dashboard');
+                } 
+            }
+        }
+
+        return back()->withErrors(['error'=>'Credentials do no match our records.']);
 
     }
 
