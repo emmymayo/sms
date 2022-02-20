@@ -39,6 +39,12 @@
               <p>Notices</p>
             </a>
           </li>
+          <li class="nav-item">
+            <a href="/products" class="nav-link">
+              <i class="nav-icon fas fa-bullhorn"></i>
+              <p>Products</p>
+            </a>
+          </li>
           @can('student-only')
           <li class="nav-item">
             <a href="/exams/report/checker/student" class="nav-link">

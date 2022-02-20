@@ -9,6 +9,9 @@ class ProductController extends Controller
 {
     public function index(){
         // return all products
+        $products = Product::paginate(15);
+
+        return view('pages.products.index', ['products'=> $products]);
     }
 
     public function create(){
@@ -16,7 +19,10 @@ class ProductController extends Controller
     }
 
     public function show(Product $product){
-        // Return a specific product
+        
+        return view('pages.products.show', [
+            'product' => $product
+        ]);
     }
 
     public function store(Request $request){
