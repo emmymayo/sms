@@ -41,8 +41,8 @@
           </li>
           <li class="nav-item">
             <a href="/products" class="nav-link">
-              <i class="nav-icon fas fa-bullhorn"></i>
-              <p>Products</p>
+              <i class="nav-icon fas fa-cash-register"></i>
+              <p>Products & Services</p>
             </a>
           </li>
           @can('student-only')
@@ -342,6 +342,27 @@
                 <i class="nav-icon fas fa-cog"></i>
                 <p>Manage Pins</p>
               </a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-item">
+            <a href="#" class="nav-link">
+              <i class="nav-icon fas fa-store"></i>
+              <p>Manage Products</p>
+              <i class="right fas fa-angle-left"></i>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="/product-management" class="nav-link">
+                  <i class="nav-icon fas fa-circle"></i>
+                  <p>Products List</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="/product-management/create" class="nav-link">
+                  <i class="nav-icon fas fa-circle"></i>
+                  <p>Add Product</p>
+                </a>
               </li>
             </ul>
           </li>

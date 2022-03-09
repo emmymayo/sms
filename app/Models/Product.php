@@ -9,6 +9,7 @@ class Product extends Model
 {
     use HasFactory;
 
+    protected $guarded = [];
     /**
      * Price Type Constants : 
      * 
@@ -17,7 +18,7 @@ class Product extends Model
     public const PRICE_VARIABLE = 2;
 
     /**
-     * Produc Type Constants
+     * Product Type Constants
      */
     public const PRODUCT_FEES = 1;
     public const PRODUCT_STATIONERIES = 2;
@@ -36,8 +37,8 @@ class Product extends Model
      */
     public static function getPriceTypes() : array{
         return [
-            'Fixed Price' => self::PRICE_FIXED,
-            'Variable Price' => self::PRICE_VARIABLE
+            self::PRICE_FIXED => 'Fixed Price',
+            self::PRICE_VARIABLE => 'Variable Price'
         ];
     }
 
@@ -48,9 +49,9 @@ class Product extends Model
      */
     public static function getProductTypes() : array{
         return [
-            'Fees' => self::PRODUCT_FEES,
-            'Stationeries' => self::PRODUCT_STATIONERIES,
-            'Others' => self::PRODUCT_OTHERS,
+            self::PRODUCT_FEES => 'Fees',
+            self::PRODUCT_STATIONERIES => 'Stationeries',
+            self::PRODUCT_OTHERS => 'Others',
         ];
     }
 }

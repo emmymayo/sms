@@ -33,9 +33,11 @@ use App\Http\Controllers\NoticeController;
 use App\Http\Controllers\SettingController;
 use App\Http\Controllers\PinController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\ProductManagementController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\PromotionController;
 use App\Http\Controllers\RoleController;
+use App\Http\Controllers\ServicePaymentController;
 use App\Http\Controllers\StudentCbtController;
 use App\Http\Controllers\StudentCbtResultController;
 use App\Http\Controllers\StudentEClassesController;
@@ -333,6 +335,16 @@ Route::patch('/student-cbt-results',[StudentCbtResultController::class,'update']
 // Product Routes
 Route::get('/products', [ProductController::class, 'index'])->middleware('auth');
 Route::get('/products/{product}', [ProductController::class, 'show'])->middleware('auth');
+
+
+Route::get('/product-management', [ProductManagementController::class, 'index'])->middleware('auth');
+Route::post('/product-management', [ProductManagementController::class, 'store'])->middleware('auth');
+Route::get('/product-management/create', [ProductManagementController::class, 'create'])->middleware('auth');
+Route::get('/product-management/{product}/edit', [ProductManagementController::class, 'edit'])->middleware('auth');
+Route::put('/product-management/{product}', [ProductManagementController::class, 'update'])->middleware('auth');
+Route::delete('/product-management/{product}', [ProductManagementController::class, 'destroy'])->middleware('auth');
+
+Route::post('/service-payment/confirm', [ServicePaymentController::class, 'confirm'])->middleware('auth');
 
 
 

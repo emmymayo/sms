@@ -1,6 +1,6 @@
 
 
-    <x-header title="Products - {{$product->name}}" >
+    <x-header title="Confirm Payment" >
        
        </x-header>
        
@@ -17,14 +17,13 @@
                    <div class="container-fluid">
                        <div class="row mb-2">
                        <div class="col-sm-6">
-                           <h1 class="m-0">{{$product->name}}</h1>
+                           <h1 class="m-0">Confirm Payment</h1>
                        </div><!-- /.col -->
                        <div class="col-sm-6">
                            <ol class="breadcrumb float-sm-right">
                            <li class="breadcrumb-item"><a href="/">Home</a></li>
                            <li class="breadcrumb-item "><a href="/dashboard">Dashboard</a></li>
                            <li class="breadcrumb-item "><a href="/products">Products</a></li>
-                           <li class="breadcrumb-item active"><a href="/products/{{$product->id}}">{{$product->name}}</a></li>
                            </ol>
                        </div><!-- /.col -->
                        </div><!-- /.row -->
@@ -46,15 +45,7 @@
                    <div class=" card my-2 p-3">
                         <p>{{$product->name}}</p>
                         <span>{{$product->price}}</span>
-                        <form method="POST" action="/service-payment/confirm">
-                            @csrf
-                            <input type="hidden" name="product_id" value="{{$product->id}}">
-                            <label>Qty:</label> <input type="number" name="quantity" id="quantity" value="1" /> <br>
-                            <label for="">Amount</label> 
-                            <input type="{{$product->price_type == \App\Models\Product::PRICE_FIXED ? 'hidden' : 'number'}}"  name="subtotal" id="subtotal" value="{{$product->price}}">
-                            <button type="submit">Proceed to Payment</button>
-                        </form>
-                       
+                        <button>Buy</button>
                         <p>{{$product->description}}</p>
                    </div>
                        
